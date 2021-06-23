@@ -12,7 +12,7 @@ class trafficClient(object):
     Client for gRPC functionality
     """
 
-    def __init__(self):
+    def __init__(self,id):
         self.host = 'localhost'
         self.server_port = 50051
 
@@ -23,7 +23,7 @@ class trafficClient(object):
         # bind the client and the server
         self.stub = pb2_grpc.trafficLightStub(self.channel)
 
-        self.id = ''
+        self.id = id
 
     # def get_url(self, message):
     #     """
@@ -33,36 +33,44 @@ class trafficClient(object):
     #     print(f'{message}')
     #     return self.stub.GetServerResponse(message)
 
-    def ping_nodes(self,id,message):
-        """ Ping traffic light nodes within traffic light junction """
+    def ping_server(self,id,message):
+        """ Ping from traffic light node to traffic light server / controller """
         ping = pb2.Message(message= "{0} pinged : {1}".format(id,message))
         print(f'{ping}')
+        #return server response in server.py
         return self.stub.GetServerResponse(ping)
 
-    def node_north():
-        """ North traffic node"""
-        id = "north"
+    def ping_node(self,requestId,message,responseId):
+        """ Ping from traffic light node to traffic light node """
+        ping = pb2.Message(message= "{0} pinged : {1} to {2}".format(requestId,message,responseId))
+        print(f'{ping}')
 
-    def node_south():
-        """ South traffic node"""
-        id = "south"
-        
-    def node_east():
-        """ east traffic node"""
-        id = "east"
-
-    def node_west():
-        """ West traffic node"""
-        id = "west"
 
 if __name__ == '__main__':
-    client = trafficClient()
+    client = trafficClient(id="testXXXXX")
+    north = trafficClient(id="north")
+    south = trafficClient(id="south")
+    east = trafficClient(id="east")
+    west = trafficClient(id="west")
+
+
+
+    while True:
+        #pint server
+        # reply = client.ping_server(id=client.id,message="Server are you alive?")
+        # print(f'{reply}')
+
+        #Ping node
+        north.ping_node(requestId=north.id,message="test",responseId="south")
+
+
+
+        # time.sleep for fixed interval
+        time.sleep(5)
+
+
+
     # result = client.get_url(message="Hello Server you there?")
     # x = threading.Thread(target=client.get_url, args=('thread',))
     # result = x.start()
     # print(f'{result}')
-    while True:
-        reply = client.ping_nodes(id="north",message="Are you alive?")
-        print(f'{reply}')
-        # time.sleep for fixed interval
-        time.sleep(2)

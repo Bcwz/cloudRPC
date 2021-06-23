@@ -22,7 +22,7 @@ class trafficClient(object):
 
         # bind the client and the server
         self.stub = pb2_grpc.trafficLightStub(self.channel)
-
+        #id to identify node
         self.id = id
 
     # def get_url(self, message):
@@ -54,15 +54,14 @@ if __name__ == '__main__':
     west = trafficClient(id="west")
 
 
-
     while True:
-        #pint server
+        #ping server
         # reply = client.ping_server(id=client.id,message="Server are you alive?")
         # print(f'{reply}')
 
-        #Ping node
-        north.ping_node(requestId=north.id,message="test",responseId="south")
-
+        #Ping node - threaded
+        ping_thread = threading.Thread(target=client.ping_node, args=(north.id,"THREADMESSAGE","south"))
+        ping_thread.start()
 
 
         # time.sleep for fixed interval

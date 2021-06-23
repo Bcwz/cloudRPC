@@ -4,6 +4,7 @@ import trafficLight_pb2_grpc as pb2_grpc
 import trafficLight_pb2 as pb2
 import threading
 import os
+import time
 
 
 class trafficClient(object):
@@ -60,4 +61,8 @@ if __name__ == '__main__':
     # x = threading.Thread(target=client.get_url, args=('thread',))
     # result = x.start()
     # print(f'{result}')
-    client.ping_nodes(id="north",message="Are you alive?")
+    while True:
+        reply = client.ping_nodes(id="north",message="Are you alive?")
+        print(f'{reply}')
+        # time.sleep for fixed interval
+        time.sleep(2)

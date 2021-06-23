@@ -5,6 +5,7 @@ import trafficLight_pb2_grpc as pb2_grpc
 import trafficLight_pb2 as pb2
 
 
+
 class trafficService(pb2_grpc.trafficLightServicer):
 
     def __init__(self, *args, **kwargs):
@@ -20,7 +21,7 @@ class trafficService(pb2_grpc.trafficLightServicer):
         return pb2.MessageResponse(**result)
 
 
-def serve():
+def server():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pb2_grpc.add_trafficLightServicer_to_server(trafficService(), server)
     server.add_insecure_port('[::]:50051')
@@ -29,4 +30,4 @@ def serve():
 
 
 if __name__ == '__main__':
-    serve()
+    server()

@@ -32,7 +32,7 @@ class trafficClient(object):
 
 if __name__ == '__main__':
     client = trafficClient()
-    #result = client.get_url(message="Hello Server you there?")
+    # result = client.get_url(message="Hello Server you there?")
     x = threading.Thread(target=client.get_url, args=('thread',))
     result = x.start()
-    #print(f'{result}')
+    # print(f'{result}')

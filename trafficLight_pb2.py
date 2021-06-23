@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x12trafficLight.proto\x12\x0ctrafficLight\"\x1a\n\x07Message\x12\x0f\n\x07message\x18\x01 \x01(\t\"4\n\x0fMessageResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\x12\x10\n\x08received\x18\x02 \x01(\x08\x32[\n\x0ctrafficLight\x12K\n\x11GetServerResponse\x12\x15.trafficLight.Message\x1a\x1d.trafficLight.MessageResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x12trafficLight.proto\x12\x0ctrafficLight\"\x1a\n\x07Message\x12\x0f\n\x07message\x18\x01 \x01(\t\"4\n\x0fMessageResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\x12\x10\n\x08received\x18\x02 \x01(\x08\x32[\n\x0ctrafficLight\x12K\n\x11GetServerResponse\x12\x15.trafficLight.Message\x1a\x1d.trafficLight.MessageResponse\"\x00\x32\xca\x02\n\ncontroller\x12R\n\x18trafficLightToController\x12\x15.trafficLight.Message\x1a\x1d.trafficLight.MessageResponse\"\x00\x12R\n\x18\x63ontrollerToTrafficLight\x12\x15.trafficLight.Message\x1a\x1d.trafficLight.MessageResponse\"\x00\x12I\n\x0f\x63ontrollerToLTA\x12\x15.trafficLight.Message\x1a\x1d.trafficLight.MessageResponse\"\x00\x12I\n\x0fLTAToController\x12\x15.trafficLight.Message\x1a\x1d.trafficLight.MessageResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -139,5 +139,61 @@ _TRAFFICLIGHT = _descriptor.ServiceDescriptor(
 _sym_db.RegisterServiceDescriptor(_TRAFFICLIGHT)
 
 DESCRIPTOR.services_by_name['trafficLight'] = _TRAFFICLIGHT
+
+
+_CONTROLLER = _descriptor.ServiceDescriptor(
+  name='controller',
+  full_name='trafficLight.controller',
+  file=DESCRIPTOR,
+  index=1,
+  serialized_options=None,
+  create_key=_descriptor._internal_create_key,
+  serialized_start=212,
+  serialized_end=542,
+  methods=[
+  _descriptor.MethodDescriptor(
+    name='trafficLightToController',
+    full_name='trafficLight.controller.trafficLightToController',
+    index=0,
+    containing_service=None,
+    input_type=_MESSAGE,
+    output_type=_MESSAGERESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='controllerToTrafficLight',
+    full_name='trafficLight.controller.controllerToTrafficLight',
+    index=1,
+    containing_service=None,
+    input_type=_MESSAGE,
+    output_type=_MESSAGERESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='controllerToLTA',
+    full_name='trafficLight.controller.controllerToLTA',
+    index=2,
+    containing_service=None,
+    input_type=_MESSAGE,
+    output_type=_MESSAGERESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='LTAToController',
+    full_name='trafficLight.controller.LTAToController',
+    index=3,
+    containing_service=None,
+    input_type=_MESSAGE,
+    output_type=_MESSAGERESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+])
+_sym_db.RegisterServiceDescriptor(_CONTROLLER)
+
+DESCRIPTOR.services_by_name['controller'] = _CONTROLLER
 
 # @@protoc_insertion_point(module_scope)

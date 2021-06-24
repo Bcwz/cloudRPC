@@ -42,7 +42,12 @@ class trafficClient(object):
         #Getting a node reply if dead or alive
         replyStatus = client.node_reply(responseStatus)
         if replyStatus == "dead" : 
-            print("pinged back dead")
+            #print("pinged back dead")
+            #Ping server to notify that reponse node is dead
+            alertMessage = '{0} is dead'.format(responseId)
+            alertServer = client.ping_server(requestId,alertMessage)
+            #server acknowledge that it received alertMessage
+            print(f'{alertServer}')
         else:
             print("pinged back alive")
         

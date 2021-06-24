@@ -12,7 +12,7 @@ class trafficClient(object):
     Client for gRPC functionality
     """
 
-    def __init__(self,id):
+    def __init__(self,id,status):
         self.host = 'localhost'
         self.server_port = 50051
 
@@ -24,6 +24,8 @@ class trafficClient(object):
         self.stub = pb2_grpc.trafficLightStub(self.channel)
         #id to identify node
         self.id = id
+        #Status to identify if dead or alive
+        self.status = status
 
     def ping_server(self,id,message):
         """ Ping from traffic light node to traffic light server / controller """
@@ -32,36 +34,40 @@ class trafficClient(object):
         #return server response in server.py
         return self.stub.GetServerResponse(ping)
 
-    def ping_node(self,requestId,message,responseId):
+    def ping_node(self,requestId,message,responseId,responseStatus):
         """ Ping from traffic light node to traffic light node """
         ping = pb2.Message(message= "{0} pinged : {1} to {2}".format(requestId,message,responseId))
-
-        #Getting a node reply if dead or alive
-        print(client.node_reply(responseId))
         #print(f'{ping}')
 
-    def node_reply(self,responseId):
-        alive = True
-        if alive:
-            alive_message = ('Yes, {0} is alive'.format(responseId))
-            return alive_message
+        #Getting a node reply if dead or alive
+        replyStatus = client.node_reply(responseStatus)
+        if replyStatus == "dead" : 
+            print("pinged back dead")
         else:
-            dead_message = ('No, {0} is dead'.format(responseId))
-            return dead_message
+            print("pinged back alive")
+        
+
+    def node_reply(self,responseStatus):
+        alive = responseStatus
+        if alive:
+            return "alive"
+        else:
+            return "dead"
 
 if __name__ == '__main__':
-    client = trafficClient(id="testXXXXX")
-    north = trafficClient(id="north")
-    south = trafficClient(id="south")
-    east = trafficClient(id="east")
-    west = trafficClient(id="west")
+    # Status = 1 for alive, Status = 0 for dead
+    client = trafficClient(id="testXXXXX",status=1)
+    north = trafficClient(id="north",status=1)
+    south = trafficClient(id="south",status=0)
+    east = trafficClient(id="east",status=1)
+    west = trafficClient(id="west",status=1)
     node_array = [north,south,east,west]
     while True:
         #Ping node - threaded
-        ping_thread = threading.Thread(target=client.ping_node, args=(north.id,"Are you alive?","south"))
+        ping_thread = threading.Thread(target=client.ping_node, args=(north.id,"Are you alive?",south.id,south.status))
         ping_thread.start()
         # time.sleep for fixed interval
-        time.sleep(5)
+        time.sleep(10)
 
 
 

@@ -55,6 +55,7 @@ if __name__ == '__main__':
     south = trafficClient(id="south")
     east = trafficClient(id="east")
     west = trafficClient(id="west")
+    node_array = [north,south,east,west]
     while True:
         #Ping node - threaded
         ping_thread = threading.Thread(target=client.ping_node, args=(north.id,"Are you alive?","south"))

@@ -11,6 +11,7 @@ package assignment_prototype;
 
 service communicator {
    rpc makerequest(RequestCall) returns (RequestResponse) {}
+   rpc getLogs(RequestLog) returns (logResponse){}
 
 }
 
@@ -22,5 +23,16 @@ message RequestCall{
 
 message RequestResponse{
   string ResponseMsg = 1;
+}
+
+message RequestLog{
+  int32 types = 1;
+  
+}
+
+message logResponse{
+    string Content = 1;
+    string filename = 2;
+    
 }
 

@@ -4,10 +4,48 @@ from telethon import TelegramClient, sync, events
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 import telebot
 import requests
+import grpc
+import assignment_prototype_pb2
+import assignment_prototype_pb2_grpc
 # Please keep this safe as this is the bot token....
+
 bot_token = '1865636715:AAEmLEWQwrIIDTtWwVQVPxVwe5XFyvUulw0'
 bot_chatID = '347015062'
+logDir = ''
+clientName = ''
+port_range_start = 50051
+port_range_end = 50055
 
+def echo(update, context):
+    """Echo the user message."""
+    update.message.reply_text(update.message.text)
+
+def getLog(update, context):
+
+    for i in range(port_range_start, port_range_end):
+        channel = grpc.insecure_channel('localhost:'+str(i))
+        stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+        response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
+        logDir = response.filename
+        
+        f = open(logDir, "w")
+        f.write(response.Content)
+        f.close()
+        
+        print(logDir)
+        files = {'document': open(logDir)}
+        send_file = 'https://api.telegram.org/bot' + bot_token + '/sendDocument?chat_id=' + bot_chatID + '&caption=' + logDir
+        response = requests.post(send_file,  files=files)
+
+
+def telegram_start_server():
+    updater = Updater(bot_token , use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler('getLog',getLog))
+    dp.add_handler(CommandHandler('echo',echo))
+    print("\nTelegram Board Initialized")
+    updater.start_polling()
+    updater.idle()
 
 def telegram_bot_sendtext(bot_message):
     send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
@@ -15,3 +53,12 @@ def telegram_bot_sendtext(bot_message):
     print('Text = ' + send_text)
     print(response)
     return response.json()
+
+def telegram_bot_sendFiles():
+    files = {'document': open(logDir)}
+    send_file = 'https://api.telegram.org/bot' + bot_token + '/sendDocument?chat_id=' + bot_chatID + '&caption=' + logDir
+    response = requests.post(send_file,  files=files)
+    print(logDir)
+    print(response.json())
+    return response.json()
+

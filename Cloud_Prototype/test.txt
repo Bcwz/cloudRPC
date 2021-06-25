@@ -1,0 +1,167 @@
+Report Accident sent to controller @ 2021-06-25 17:46:34,291
+Report Suspicious Vehicle sent to controller @ 2021-06-25 17:47:19,302
+Report Accident sent to controller @ 2021-06-25 17:48:10,307
+Report Accident sent to controller @ 2021-06-25 17:49:08,310
+Report Suspicious Vehicle sent to controller @ 2021-06-25 17:50:02,325
+Report Suspicious Vehicle sent to controller @ 2021-06-25 17:51:02,331
+Report Suspicious Vehicle sent to controller @ 2021-06-25 17:51:51,341
+Report Accident sent to controller @ 2021-06-25 17:52:40,347
+Received signal 2 (SIGINT), stopping... @ 2021-06-25 17:53:23,920
+Scheduler has been shut down @ 2021-06-25 17:53:23,920
+Exiting immediately! @ 2021-06-25 17:53:24,410
+Server A Started @ 2021-06-25 17:53:27,587
+Report Suspicious Vehicle sent to controller @ 2021-06-25 17:54:16,593
+Report Suspicious Vehicle sent to controller @ 2021-06-25 17:55:01,599
+Report Accident sent to controller @ 2021-06-25 17:55:50,603
+Report Accident sent to controller @ 2021-06-25 17:56:42,621
+Report Accident sent to controller @ 2021-06-25 17:57:42,628
+Report Suspicious Vehicle sent to controller @ 2021-06-25 17:58:30,632
+Report Suspicious Vehicle sent to controller @ 2021-06-25 17:59:18,640
+Report Accident sent to controller @ 2021-06-25 18:00:18,646
+Report Accident sent to controller @ 2021-06-25 18:01:13,658
+Server A Started @ 2021-06-25 18:02:24,574
+Report Accident sent to controller @ 2021-06-25 18:03:13,582
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:03:58,587
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:04:55,592
+Report Accident sent to controller @ 2021-06-25 18:05:41,604
+Server A Started @ 2021-06-25 18:06:03,912
+Server A Started @ 2021-06-25 18:06:52,080
+Report Accident sent to controller @ 2021-06-25 18:07:47,093
+Report Accident sent to controller @ 2021-06-25 18:08:33,098
+Server A Started @ 2021-06-25 18:09:20,963
+Report Accident sent to controller @ 2021-06-25 18:10:05,971
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:10:59,978
+Server A Started @ 2021-06-25 18:11:47,151
+Report Accident sent to controller @ 2021-06-25 18:12:35,157
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:13:26,161
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:14:15,171
+Server A Started @ 2021-06-25 18:14:39,939
+Report Accident sent to controller @ 2021-06-25 18:15:28,954
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:16:28,964
+Report Accident sent to controller @ 2021-06-25 18:17:18,981
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:18:05,992
+Report Accident sent to controller @ 2021-06-25 18:18:55,003
+Report Accident sent to controller @ 2021-06-25 18:19:52,016
+Report Accident sent to controller @ 2021-06-25 18:20:51,023
+Report Accident sent to controller @ 2021-06-25 18:21:45,028
+Report Accident sent to controller @ 2021-06-25 18:22:41,034
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:23:36,044
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:24:23,047
+Report Accident sent to controller @ 2021-06-25 18:25:22,061
+Report Accident sent to controller @ 2021-06-25 18:26:19,067
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:27:07,074
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:27:58,078
+Report Accident sent to controller @ 2021-06-25 18:28:57,094
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:29:54,101
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:30:45,114
+Report Accident sent to controller @ 2021-06-25 18:31:42,121
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:32:39,132
+Report Accident sent to controller @ 2021-06-25 18:33:24,140
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:34:16,157
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:35:15,171
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:36:00,179
+Report Accident sent to controller @ 2021-06-25 18:36:57,187
+Report Accident sent to controller @ 2021-06-25 18:37:48,193
+Report Accident sent to controller @ 2021-06-25 18:38:39,199
+Report Accident sent to controller @ 2021-06-25 18:39:29,214
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:40:22,224
+Report Accident sent to controller @ 2021-06-25 18:41:18,234
+Report Accident sent to controller @ 2021-06-25 18:42:18,237
+Report Accident sent to controller @ 2021-06-25 18:43:15,247
+Report Accident sent to controller @ 2021-06-25 18:44:13,259
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:45:11,270
+Report Accident sent to controller @ 2021-06-25 18:46:00,284
+Report Accident sent to controller @ 2021-06-25 18:46:55,295
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:47:49,304
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:48:40,307
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:49:35,314
+Report Accident sent to controller @ 2021-06-25 18:50:30,332
+Report Accident sent to controller @ 2021-06-25 18:51:17,346
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:52:17,363
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:53:07,379
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:54:05,392
+Report Accident sent to controller @ 2021-06-25 18:54:59,408
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:55:56,420
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:56:53,435
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:57:39,442
+Report Suspicious Vehicle sent to controller @ 2021-06-25 18:58:35,452
+Report Accident sent to controller @ 2021-06-25 18:59:26,466
+Report Accident sent to controller @ 2021-06-25 19:00:25,472
+Report Accident sent to controller @ 2021-06-25 19:01:11,485
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:02:10,489
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:03:00,501
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:03:52,507
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:04:49,509
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:05:42,515
+Report Accident sent to controller @ 2021-06-25 19:06:33,530
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:07:24,545
+Report Accident sent to controller @ 2021-06-25 19:08:10,557
+Report Accident sent to controller @ 2021-06-25 19:09:04,571
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:09:50,582
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:10:46,592
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:11:31,599
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:12:30,609
+Report Accident sent to controller @ 2021-06-25 19:13:16,617
+Report Accident sent to controller @ 2021-06-25 19:14:03,622
+Report Accident sent to controller @ 2021-06-25 19:14:57,636
+Report Accident sent to controller @ 2021-06-25 19:15:57,651
+Report Accident sent to controller @ 2021-06-25 19:16:50,662
+Report Accident sent to controller @ 2021-06-25 19:17:42,674
+Report Accident sent to controller @ 2021-06-25 19:18:30,683
+Report Accident sent to controller @ 2021-06-25 19:19:24,696
+Report Accident sent to controller @ 2021-06-25 19:20:09,702
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:21:08,716
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:22:07,728
+Report Accident sent to controller @ 2021-06-25 19:22:57,743
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:23:54,749
+Report Accident sent to controller @ 2021-06-25 19:24:47,761
+Report Accident sent to controller @ 2021-06-25 19:25:46,776
+Report Accident sent to controller @ 2021-06-25 19:26:40,785
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:27:40,796
+Report Accident sent to controller @ 2021-06-25 19:28:37,800
+Report Accident sent to controller @ 2021-06-25 19:29:30,803
+Report Accident sent to controller @ 2021-06-25 19:30:26,817
+Report Accident sent to controller @ 2021-06-25 19:31:23,830
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:32:08,841
+Report Accident sent to controller @ 2021-06-25 19:33:07,849
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:33:58,864
+Report Accident sent to controller @ 2021-06-25 19:34:58,868
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:35:52,874
+Report Accident sent to controller @ 2021-06-25 19:36:52,878
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:37:41,890
+Report Accident sent to controller @ 2021-06-25 19:38:38,900
+Report Accident sent to controller @ 2021-06-25 19:39:35,917
+Report Accident sent to controller @ 2021-06-25 19:40:23,932
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:41:14,944
+Report Accident sent to controller @ 2021-06-25 19:41:59,957
+Report Accident sent to controller @ 2021-06-25 19:42:45,968
+Report Accident sent to controller @ 2021-06-25 19:43:40,978
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:44:32,983
+Report Accident sent to controller @ 2021-06-25 19:45:23,996
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:46:09,008
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:47:03,012
+Report Accident sent to controller @ 2021-06-25 19:47:59,026
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:48:56,039
+Report Accident sent to controller @ 2021-06-25 19:49:54,048
+Report Accident sent to controller @ 2021-06-25 19:50:43,056
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:51:39,064
+Report Accident sent to controller @ 2021-06-25 19:52:27,076
+Report Accident sent to controller @ 2021-06-25 19:53:21,084
+Report Accident sent to controller @ 2021-06-25 19:54:10,087
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:55:00,097
+Report Accident sent to controller @ 2021-06-25 19:55:56,102
+Report Accident sent to controller @ 2021-06-25 19:56:41,108
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:57:30,114
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:58:30,122
+Report Suspicious Vehicle sent to controller @ 2021-06-25 19:59:24,137
+Report Accident sent to controller @ 2021-06-25 20:00:09,145
+Report Accident sent to controller @ 2021-06-25 20:01:01,152
+Report Accident sent to controller @ 2021-06-25 20:01:50,166
+Report Suspicious Vehicle sent to controller @ 2021-06-25 20:02:44,169
+Server A Started @ 2021-06-25 20:07:34,781
+Report Accident sent to controller @ 2021-06-25 20:08:21,783
+Report Accident sent to controller @ 2021-06-25 20:09:13,798
+Report Suspicious Vehicle sent to controller @ 2021-06-25 20:10:01,812
+Server A Started @ 2021-06-25 20:12:02,014
+Server A Started @ 2021-06-25 20:14:38,498
+Server A Started @ 2021-06-25 20:15:14,446

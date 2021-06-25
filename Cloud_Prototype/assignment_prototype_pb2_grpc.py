@@ -19,12 +19,23 @@ class communicatorStub(object):
                 request_serializer=assignment__prototype__pb2.RequestCall.SerializeToString,
                 response_deserializer=assignment__prototype__pb2.RequestResponse.FromString,
                 )
+        self.getLogs = channel.unary_unary(
+                '/assignment_prototype.communicator/getLogs',
+                request_serializer=assignment__prototype__pb2.RequestLog.SerializeToString,
+                response_deserializer=assignment__prototype__pb2.logResponse.FromString,
+                )
 
 
 class communicatorServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def makerequest(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getLogs(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -37,6 +48,11 @@ def add_communicatorServicer_to_server(servicer, server):
                     servicer.makerequest,
                     request_deserializer=assignment__prototype__pb2.RequestCall.FromString,
                     response_serializer=assignment__prototype__pb2.RequestResponse.SerializeToString,
+            ),
+            'getLogs': grpc.unary_unary_rpc_method_handler(
+                    servicer.getLogs,
+                    request_deserializer=assignment__prototype__pb2.RequestLog.FromString,
+                    response_serializer=assignment__prototype__pb2.logResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -62,5 +78,22 @@ class communicator(object):
         return grpc.experimental.unary_unary(request, target, '/assignment_prototype.communicator/makerequest',
             assignment__prototype__pb2.RequestCall.SerializeToString,
             assignment__prototype__pb2.RequestResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def getLogs(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/assignment_prototype.communicator/getLogs',
+            assignment__prototype__pb2.RequestLog.SerializeToString,
+            assignment__prototype__pb2.logResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

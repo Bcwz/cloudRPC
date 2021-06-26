@@ -21,21 +21,21 @@ def echo(update, context):
     update.message.reply_text(update.message.text)
 
 def getLog(update, context):
-
+    output_name = 'Consolidated_log.log'
+    dataContent = ''
     for i in range(port_range_start, port_range_end):
         channel = grpc.insecure_channel('localhost:'+str(i))
         stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
         response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
-        logDir = response.filename
+        dataContent = dataContent + '\n'+ response.Content 
         
-        f = open(logDir, "w")
-        f.write(response.Content)
-        f.close()
-        
-        print(logDir)
-        files = {'document': open(logDir)}
-        send_file = 'https://api.telegram.org/bot' + bot_token + '/sendDocument?chat_id=' + bot_chatID + '&caption=' + logDir
-        response = requests.post(send_file,  files=files)
+    f = open(output_name, "w")
+    f.write(dataContent)
+    f.close()
+
+    files = {'document': open(output_name)}
+    send_file = 'https://api.telegram.org/bot' + bot_token + '/sendDocument?chat_id=' + bot_chatID + '&caption=Consolidated-Logs' 
+    response = requests.post(send_file,  files=files)
 
 
 def telegram_start_server():

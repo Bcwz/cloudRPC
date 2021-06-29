@@ -24,9 +24,6 @@ host_port = 50055
 #ping_port = 50055
 ping_target = 'B'
 time_gap = 30
-
-suspicious_vehicle = {'SK123A','SC1235B','ST9021A'}
-#Disabled the telegram (So called Send to LTA/Cloud)
 num_of_TL = 4
 
 

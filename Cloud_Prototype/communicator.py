@@ -16,12 +16,14 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
         elif (request.type == 1):
             #print('Request Received: ' + request.RequestMsg)
             telegram_bot_sendtext('Request Received: ' + request.RequestMsg)
+            
             return assignment_prototype_pb2.RequestResponse(ResponseMsg ='This is your request: %s!' % request.RequestMsg)
             #Other whatever request that the user requested....
         
         elif (request.type == 2):
             #print('Request Received: ' + request.RequestMsg)
             telegram_bot_sendtext('Request Received: ' + request.RequestMsg)
+            
             return assignment_prototype_pb2.RequestResponse(ResponseMsg ='This is your request: %s!' % request.RequestMsg)
             #Other whatever request that the user requested....
         elif (request.type == 3):

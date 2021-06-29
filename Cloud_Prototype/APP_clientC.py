@@ -31,7 +31,7 @@ option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taf
 #suspicious_vehicle = {'SK123A','SC1235B','ST9021A'}
 #Disabled the telegram (So called Send to LTA/Cloud)
 
-    
+     
 def requestFunction(port, requestType):
     global fail_count
     try:
@@ -52,13 +52,21 @@ def requestFunction(port, requestType):
                 #Call the Cloud Services when failed to ping Traffic Light B
                     print('Failed to ping Traffic Light ' + ping_target)
                     requestFunction(controller_port, 3)
+                    
                 threading.Timer(time_gap, requestFunction,[port,requestType]).start()
+
+            else:
+                print('Failed to ' + option_type[requestType])
+
+            if port == controller_port:
+                logging.info('Failed to communicate with Junction Controller')
+                print('Failed to communicate with Junction Controller')
             #print('Client Not Available...Failure Count: ', fail_count)
             
 
 def random_Event():
     #Randomized within 10 to 60s
-    next_evt_trigger = random.randint(90,180)
+    next_evt_trigger = random.randint(90,100)
     evt = random.randint(1,2)
     # Both Report Accident and Report Vehicle should be sent to the junction controller, so it should be controller port
     threading.Thread(target=requestFunction, args=(controller_port,evt,)).start()
@@ -67,7 +75,7 @@ def random_Event():
 
 
 def run_server():
-    logging.info('Server C Started')
+    logging.info('Server A Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(communicator.communicator(), server)
     server.add_insecure_port('[::]:'+str(host_port))
@@ -77,8 +85,10 @@ def run_server():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(filename=logDir, level=logging.INFO,format='%(message)s @ %(asctime)s')
-        
+    logging.basicConfig(filename=logDir, level=logging.INFO,format='%(message)s @ %(asctime)s')    
+
+    
+
     #Basically, the general idea is to run both client and server example to perform distributed communications...
     #Simply said, what's done here is to run the server and every 30s, it will ping alive another machine...    
     
@@ -100,3 +110,4 @@ if __name__ == '__main__':
             sys.exit(0)
         except SystemExit:
             os._exit(0)
+

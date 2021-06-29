@@ -13,8 +13,9 @@ import random
 import communicator
 import requests
 import _thread
-
-
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import messagebox
 name = 'TL-A'
 logDir = name+'_log.log'
 logOutDir = name + '_Output.log'
@@ -28,6 +29,7 @@ ping_port = 50052
 
 controller_port = 50055
 option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taffic Light Failure']
+
 
 #suspicious_vehicle = {'SK123A','SC1235B','ST9021A'}
 #Disabled the telegram (So called Send to LTA/Cloud)
@@ -53,7 +55,15 @@ def requestFunction(port, requestType):
                 #Call the Cloud Services when failed to ping Traffic Light B
                     print('Failed to ping Traffic Light ' + ping_target)
                     requestFunction(controller_port, 3)
+                    
                 threading.Timer(time_gap, requestFunction,[port,requestType]).start()
+
+            else:
+                print('Failed to ' + option_type[requestType])
+
+            if port == controller_port:
+                logging.info('Failed to communicate with Junction Controller')
+                print('Failed to communicate with Junction Controller')
             #print('Client Not Available...Failure Count: ', fail_count)
             
 
@@ -78,8 +88,10 @@ def run_server():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(filename=logDir, level=logging.INFO,format='%(message)s @ %(asctime)s')
-        
+    logging.basicConfig(filename=logDir, level=logging.INFO,format='%(message)s @ %(asctime)s')    
+
+    
+
     #Basically, the general idea is to run both client and server example to perform distributed communications...
     #Simply said, what's done here is to run the server and every 30s, it will ping alive another machine...    
     

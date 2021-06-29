@@ -1,0 +1,210 @@
+Scheduler started @ 2021-06-26 15:39:51,989
+Scheduler started @ 2021-06-29 00:19:31,203
+No error handlers are registered, logging exception. @ 2021-06-29 00:20:45,763
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 57, in getLog
+    response = requests.post(send_file,  files=files)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 119, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 528, in request
+    prep = self.prepare_request(req)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 456, in prepare_request
+    p.prepare(
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 319, in prepare
+    self.prepare_body(data, files, json)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 507, in prepare_body
+    (body, content_type) = self._encode_files(files, data)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 159, in _encode_files
+    fdata = fp.read()
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x9d in position 141: character maps to <undefined>
+No error handlers are registered, logging exception. @ 2021-06-29 00:21:32,160
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 57, in getLog
+    response = requests.post(send_file,  files=files)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 119, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 528, in request
+    prep = self.prepare_request(req)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 456, in prepare_request
+    p.prepare(
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 319, in prepare
+    self.prepare_body(data, files, json)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 507, in prepare_body
+    (body, content_type) = self._encode_files(files, data)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 159, in _encode_files
+    fdata = fp.read()
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x9d in position 141: character maps to <undefined>
+No error handlers are registered, logging exception. @ 2021-06-29 00:21:50,514
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 57, in getLog
+    response = requests.post(send_file,  files=files)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 119, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 528, in request
+    prep = self.prepare_request(req)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 456, in prepare_request
+    p.prepare(
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 319, in prepare
+    self.prepare_body(data, files, json)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 507, in prepare_body
+    (body, content_type) = self._encode_files(files, data)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 159, in _encode_files
+    fdata = fp.read()
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x9d in position 141: character maps to <undefined>
+No error handlers are registered, logging exception. @ 2021-06-29 00:22:46,416
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 57, in getLog
+    response = requests.post(send_file,  files=files)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 119, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 528, in request
+    prep = self.prepare_request(req)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 456, in prepare_request
+    p.prepare(
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 319, in prepare
+    self.prepare_body(data, files, json)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 507, in prepare_body
+    (body, content_type) = self._encode_files(files, data)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 159, in _encode_files
+    fdata = fp.read()
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x8d in position 195: character maps to <undefined>
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 00:23:37,007
+Scheduler has been shut down @ 2021-06-29 00:23:37,007
+Scheduler started @ 2021-06-29 00:23:51,050
+No error handlers are registered, logging exception. @ 2021-06-29 00:23:56,864
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 57, in getLog
+    response = requests.post(send_file,  files=files)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 119, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 528, in request
+    prep = self.prepare_request(req)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 456, in prepare_request
+    p.prepare(
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 319, in prepare
+    self.prepare_body(data, files, json)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 507, in prepare_body
+    (body, content_type) = self._encode_files(files, data)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 159, in _encode_files
+    fdata = fp.read()
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x8d in position 195: character maps to <undefined>
+No error handlers are registered, logging exception. @ 2021-06-29 00:24:22,126
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 57, in getLog
+    response = requests.post(send_file,  files=files)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 119, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 528, in request
+    prep = self.prepare_request(req)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\sessions.py", line 456, in prepare_request
+    p.prepare(
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 319, in prepare
+    self.prepare_body(data, files, json)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 507, in prepare_body
+    (body, content_type) = self._encode_files(files, data)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\requests\models.py", line 159, in _encode_files
+    fdata = fp.read()
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 203: character maps to <undefined>
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 00:24:47,739
+Scheduler has been shut down @ 2021-06-29 00:24:47,739
+Exiting immediately! @ 2021-06-29 00:24:52,658
+Scheduler started @ 2021-06-29 08:52:53,058
+No error handlers are registered, logging exception. @ 2021-06-29 08:53:28,399
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 32, in getLog
+    response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_channel.py", line 946, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_channel.py", line 849, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1624928008.397000000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3009,"referenced_errors":[{"created":"@1624928008.397000000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":398,"grpc_status":14}]}"
+>
+No error handlers are registered, logging exception. @ 2021-06-29 08:53:59,028
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 32, in getLog
+    response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_channel.py", line 946, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_channel.py", line 849, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1624928039.027000000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3009,"referenced_errors":[{"created":"@1624928039.027000000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":398,"grpc_status":14}]}"
+>
+No error handlers are registered, logging exception. @ 2021-06-29 08:54:54,985
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 32, in getLog
+    response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_channel.py", line 946, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_channel.py", line 849, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1624928094.985000000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3009,"referenced_errors":[{"created":"@1624928094.985000000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":398,"grpc_status":14}]}"
+>

@@ -55,7 +55,7 @@ def requestFunction(port, requestType):
                 #Call the Cloud Services when failed to ping Traffic Light B
                     print('Failed to ping Traffic Light ' + ping_target)
                     requestFunction(controller_port, 3)
-                    
+                    fail_count = 0
                 threading.Timer(time_gap, requestFunction,[port,requestType]).start()
 
             else:
@@ -76,6 +76,15 @@ def random_Event():
     logging.info(option_type[evt] + ' sent to controller')
     threading.Timer( next_evt_trigger, random_Event).start()
 
+def messageBox(messageHeader, message):
+    root= tk.Tk()
+    root.withdraw()
+
+    MsgBox = tk.messagebox.askquestion (messageHeader,message,icon = 'warning')
+    if MsgBox == 'yes':
+       root.destroy()
+    else:
+        tk.messagebox.showinfo('Return','You will now return to the application screen')
 
 def run_server():
     logging.info('Server A Started')
@@ -90,7 +99,7 @@ def run_server():
 if __name__ == '__main__':
     logging.basicConfig(filename=logDir, level=logging.INFO,format='%(message)s @ %(asctime)s')    
 
-    
+    #messageBox('Receive File','Are you sure to receive File?')
 
     #Basically, the general idea is to run both client and server example to perform distributed communications...
     #Simply said, what's done here is to run the server and every 30s, it will ping alive another machine...    

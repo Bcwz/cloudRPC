@@ -50,6 +50,7 @@ def requestFunction(port, requestType):
                 if fail_count >= max_fail:
                 #Call the Cloud Services when failed to ping Traffic Light B
                     print('Failed to ping Traffic Light ' + ping_target)
+                    fail_count = 0
                     requestFunction(controller_port, 3)
                     
                 threading.Timer(time_gap, requestFunction,[port,requestType]).start()
@@ -74,7 +75,7 @@ def random_Event():
 
 
 def run_server():
-    logging.info('Server A Started')
+    logging.info('Server B Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(communicator.communicator(), server)
     server.add_insecure_port('[::]:'+str(host_port))

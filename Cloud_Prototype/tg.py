@@ -33,8 +33,10 @@ def getLog(update, context):
             response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
             dataContent = dataContent + '\n'+ response.Content 
         except grpc.RpcError as rpc_error:
+            #print(rpc_error)
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 print('Port ' + str(i) +' is unavailable...')
+        
     
     f = open(output_name, "w")
     f.write(dataContent)

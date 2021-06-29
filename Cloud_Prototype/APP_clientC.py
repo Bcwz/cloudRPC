@@ -67,7 +67,7 @@ def requestFunction(port, requestType):
 
 def random_Event():
     #Randomized within 10 to 60s
-    next_evt_trigger = random.randint(90,100)
+    next_evt_trigger = random.randint(90,180)
     evt = random.randint(1,2)
     # Both Report Accident and Report Vehicle should be sent to the junction controller, so it should be controller port
     threading.Thread(target=requestFunction, args=(controller_port,evt,)).start()

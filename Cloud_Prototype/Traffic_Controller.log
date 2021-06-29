@@ -231,3 +231,90 @@ Exiting immediately! @ 2021-06-29 10:09:25,289
 Scheduler started @ 2021-06-29 10:10:44,887
 Received signal 2 (SIGINT), stopping... @ 2021-06-29 10:11:42,161
 Scheduler has been shut down @ 2021-06-29 10:11:42,162
+Scheduler started @ 2021-06-29 10:23:42,760
+Scheduler started @ 2021-06-29 18:16:38,100
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 18:22:50,991
+Scheduler has been shut down @ 2021-06-29 18:22:50,991
+Exiting immediately! @ 2021-06-29 18:22:58,807
+Scheduler started @ 2021-06-29 18:23:04,814
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 18:29:47,845
+Scheduler has been shut down @ 2021-06-29 18:29:47,845
+Scheduler started @ 2021-06-29 18:41:50,642
+No error handlers are registered, logging exception. @ 2021-06-29 18:42:03,513
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 442, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 160, in handle_update
+    return self.callback(update, context)
+TypeError: echo() takes 2 positional arguments but 3 were given
+No error handlers are registered, logging exception. @ 2021-06-29 18:42:26,304
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 442, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 160, in handle_update
+    return self.callback(update, context)
+TypeError: echo() takes 2 positional arguments but 3 were given
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 18:44:04,044
+Scheduler has been shut down @ 2021-06-29 18:44:04,044
+Exiting immediately! @ 2021-06-29 18:44:08,065
+Scheduler started @ 2021-06-29 18:44:10,111
+No error handlers are registered, logging exception. @ 2021-06-29 18:44:13,608
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 442, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 160, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 27, in echo
+    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),InlineKeyboardButton("Option 2", callback_data='2')], [InlineKeyboardButton("Option 3", callback_data='3')]]
+NameError: name 'InlineKeyboardButton' is not defined
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 18:47:01,054
+Scheduler has been shut down @ 2021-06-29 18:47:01,055
+Exiting immediately! @ 2021-06-29 18:47:07,075
+Scheduler started @ 2021-06-29 18:49:26,270
+No error handlers are registered, logging exception. @ 2021-06-29 18:49:29,209
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 442, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 160, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 27, in echo
+    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),InlineKeyboardButton("Option 2", callback_data='2')], [InlineKeyboardButton("Option 3", callback_data='3')]]
+NameError: name 'InlineKeyboardButton' is not defined
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 18:51:03,564
+Scheduler has been shut down @ 2021-06-29 18:51:03,564
+Scheduler started @ 2021-06-29 21:44:33,380
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 21:47:05,936
+Scheduler has been shut down @ 2021-06-29 21:47:05,936
+Scheduler started @ 2021-06-29 21:47:10,306
+No error handlers are registered, logging exception. @ 2021-06-29 21:47:15,379
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\dispatcher.py", line 442, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\telegram\ext\handler.py", line 160, in handle_update
+    return self.callback(update, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\tg.py", line 27, in echo
+    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),InlineKeyboardButton("Option 2", callback_data='2')], [InlineKeyboardButton("Option 3", callback_data='3')]]
+NameError: name 'InlineKeyboardButton' is not defined
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 21:50:20,248
+Scheduler has been shut down @ 2021-06-29 21:50:20,248
+Exiting immediately! @ 2021-06-29 21:50:23,186
+Scheduler started @ 2021-06-29 21:51:57,978
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 21:52:47,187
+Scheduler has been shut down @ 2021-06-29 21:52:47,187
+Exiting immediately! @ 2021-06-29 21:52:49,857
+Scheduler started @ 2021-06-29 21:52:51,737
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 21:56:26,528
+Scheduler has been shut down @ 2021-06-29 21:56:26,528
+Exiting immediately! @ 2021-06-29 21:56:36,143
+Scheduler started @ 2021-06-29 21:56:38,426
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 22:01:07,566
+Scheduler has been shut down @ 2021-06-29 22:01:07,567
+Scheduler started @ 2021-06-29 22:03:11,883
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 22:12:17,420
+Scheduler has been shut down @ 2021-06-29 22:12:17,420
+Exiting immediately! @ 2021-06-29 22:12:26,029
+Scheduler started @ 2021-06-29 22:12:28,318
+Received signal 2 (SIGINT), stopping... @ 2021-06-29 23:18:25,697
+Scheduler has been shut down @ 2021-06-29 23:18:25,697
+Exiting immediately! @ 2021-06-29 23:18:33,115
+Scheduler started @ 2021-06-29 23:18:35,628

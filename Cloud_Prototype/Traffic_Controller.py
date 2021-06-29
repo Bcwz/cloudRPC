@@ -1,7 +1,8 @@
 from __future__ import print_function
 from concurrent import futures
 from threading import Thread
-from tg import telegram_bot_sendtext, telegram_start_server
+#from tg import telegram_bot_sendtext, telegram_start_server
+
 import signal
 import sys
 import os
@@ -16,17 +17,18 @@ import communicator
 import tg
 import multiprocessing
 import _thread
+
 max_fail = 3
 fail_count = 0
 name = 'JunctionA-Controller'
 host = 'localhost'
 host_port = 50055
 #ping_port = 50055
-ping_target = 'B'
 time_gap = 30
 num_of_TL = 4
+suspend = False
 
-
+bot = tg.tg()
 def run_server():
     logging.info('Server Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -46,8 +48,9 @@ def forward_log(port):
         f = open(response.filename, "w")
         f.write(response.Content)
         f.close()
-        tg.logDir = response.filename
-        tg.telegram_bot_sendFiles()   
+
+        bot.logDir = response.filename
+        bot.telegram_bot_sendFiles()   
     except grpc.RpcError as rpc_error:
         #print(rpc_error)
         if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
@@ -82,7 +85,7 @@ if __name__ == '__main__':
         p.start()
         #threading.Thread(target=telegram_start_server, args=()).start()
         
-        telegram_start_server()
+        bot.telegram_start_server()
 
     except KeyboardInterrupt:
         print('Process Killed')

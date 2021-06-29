@@ -14,8 +14,10 @@ import communicator
 import requests
 import _thread
 import tkinter as tk
-from tkinter import filedialog
-from tkinter import messagebox
+from tkinter import filedialog,messagebox
+
+
+
 name = 'TL-A'
 logDir = name+'_log.log'
 logOutDir = name + '_Output.log'
@@ -40,6 +42,7 @@ def requestFunction(port, requestType):
     try:
         channel = grpc.insecure_channel(host + ':'+str(port))
         stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+
         response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=requestType, RequestMsg= option_type[requestType] + ' From ' + name))
         print(response.ResponseMsg)
         threading.Timer(time_gap, requestFunction,[port,requestType]).start()
@@ -69,7 +72,7 @@ def requestFunction(port, requestType):
 
 def random_Event():
     #Randomized within 10 to 60s
-    next_evt_trigger = random.randint(90,100)
+    next_evt_trigger = random.randint(90,180)
     evt = random.randint(1,2)
     # Both Report Accident and Report Vehicle should be sent to the junction controller, so it should be controller port
     threading.Thread(target=requestFunction, args=(controller_port,evt,)).start()

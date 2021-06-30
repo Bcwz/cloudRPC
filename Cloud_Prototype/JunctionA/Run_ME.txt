@@ -1,0 +1,7 @@
+@echo off
+Traffic_Controller.py
+APP_clientA.py
+APP_clientB.py
+APP_clientC.py
+APP_clientD.py
+pause

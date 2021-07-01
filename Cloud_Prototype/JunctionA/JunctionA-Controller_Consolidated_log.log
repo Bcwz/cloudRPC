@@ -141,6 +141,9 @@ NameError: name 'logOutDir' is not defined
 Server A Started @ 2021-07-01 20:38:19,642
 Report Suspicious Vehicle sent to controller @ 2021-07-01 20:40:33,653
 Server A Started @ 2021-07-01 20:42:30,940
+Server A Started @ 2021-07-01 20:49:33,290
+Server A Started @ 2021-07-01 20:51:50,237
+Server A Started @ 2021-07-01 20:52:40,002
 
 Server B Started @ 2021-06-30 08:30:33,899
 Report Suspicious Vehicle sent to controller @ 2021-06-30 08:32:45,906
@@ -207,6 +210,9 @@ NameError: name 'logOutDir' is not defined
 Server A Started @ 2021-07-01 20:38:19,615
 Report Suspicious Vehicle sent to controller @ 2021-07-01 20:41:08,623
 Server A Started @ 2021-07-01 20:42:30,931
+Server A Started @ 2021-07-01 20:49:33,277
+Server A Started @ 2021-07-01 20:51:50,213
+Server A Started @ 2021-07-01 20:52:39,985
 
 Server C Started @ 2021-06-30 08:30:54,850
 Report Suspicious Vehicle sent to controller @ 2021-06-30 08:33:36,856
@@ -265,6 +271,9 @@ NameError: name 'logOutDir' is not defined
 Server A Started @ 2021-07-01 20:38:19,624
 Report Accident sent to controller @ 2021-07-01 20:40:27,625
 Server A Started @ 2021-07-01 20:42:30,920
+Server A Started @ 2021-07-01 20:49:33,260
+Server A Started @ 2021-07-01 20:51:50,224
+Server A Started @ 2021-07-01 20:52:39,988
 
 Server D Started @ 2021-06-30 08:31:08,765
 Report Suspicious Vehicle sent to controller @ 2021-06-30 08:33:55,767
@@ -325,3 +334,6 @@ NameError: name 'logOutDir' is not defined
 Server A Started @ 2021-07-01 20:38:19,625
 Report Accident sent to controller @ 2021-07-01 20:41:01,632
 Server A Started @ 2021-07-01 20:42:30,926
+Server A Started @ 2021-07-01 20:49:33,277
+Server A Started @ 2021-07-01 20:51:50,232
+Server A Started @ 2021-07-01 20:52:39,985

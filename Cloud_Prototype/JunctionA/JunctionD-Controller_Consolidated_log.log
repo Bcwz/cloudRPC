@@ -1,3 +1,5 @@
+
+
 Server A Started @ 2021-07-01 00:04:08,329
 Exception calling application: 'NoneType' object has no attribute 'telegram_bot_sendtext' @ 2021-07-01 00:05:39,776
 Traceback (most recent call last):
@@ -109,24 +111,29 @@ Traceback (most recent call last):
     self.bot.telegram_bot_sendtext('Request Received: ' + request.RequestMsg)
 AttributeError: 'NoneType' object has no attribute 'telegram_bot_sendtext'
 Server A Started @ 2021-07-01 20:58:31,502
-Exception calling application: 'NoneType' object has no attribute 'telegram_bot_sendtext' @ 2021-07-01 21:00:04,414
-Traceback (most recent call last):
-  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_server.py", line 444, in _call_behavior
-    response_or_iterator = behavior(argument, context)
-  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\JunctionD\communicator.py", line 42, in makerequest
-    self.bot.telegram_bot_sendtext('Request Received: ' + request.RequestMsg)
-AttributeError: 'NoneType' object has no attribute 'telegram_bot_sendtext'
-Exception calling application: 'NoneType' object has no attribute 'telegram_bot_sendtext' @ 2021-07-01 21:00:13,424
-Traceback (most recent call last):
-  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_server.py", line 444, in _call_behavior
-    response_or_iterator = behavior(argument, context)
-  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\JunctionD\communicator.py", line 48, in makerequest
-    self.bot.telegram_bot_sendtext('Request Received: ' + request.RequestMsg)
-AttributeError: 'NoneType' object has no attribute 'telegram_bot_sendtext'
-Exception calling application: 'NoneType' object has no attribute 'telegram_bot_sendtext' @ 2021-07-01 21:00:22,415
-Traceback (most recent call last):
-  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_server.py", line 444, in _call_behavior
-    response_or_iterator = behavior(argument, context)
-  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\JunctionD\communicator.py", line 42, in makerequest
-    self.bot.telegram_bot_sendtext('Request Received: ' + request.RequestMsg)
-AttributeError: 'NoneType' object has no attribute 'telegram_bot_sendtext'
+
+Server A Started @ 2021-07-01 00:04:08,310
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:06:51,321
+Server A Started @ 2021-07-01 00:10:16,804
+Server A Started @ 2021-07-01 00:48:16,795
+Server A Started @ 2021-07-01 20:58:31,487
+
+Server A Started @ 2021-07-01 00:04:08,310
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:05:54,323
+Server A Started @ 2021-07-01 00:10:16,803
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:12:30,808
+Failed to communicate with Junction Controller @ 2021-07-01 00:13:04,056
+Failed to communicate with Junction Controller @ 2021-07-01 00:13:04,056
+Failed to communicate with Junction Controller @ 2021-07-01 00:14:16,344
+Report Accident sent to controller @ 2021-07-01 00:15:29,817
+Failed to communicate with Junction Controller @ 2021-07-01 00:15:33,896
+Failed to communicate with Junction Controller @ 2021-07-01 00:16:02,751
+Server A Started @ 2021-07-01 00:48:16,800
+Server A Started @ 2021-07-01 20:58:31,487
+
+Server A Started @ 2021-07-01 00:04:08,312
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:07:02,319
+Server A Started @ 2021-07-01 00:10:16,810
+Server A Started @ 2021-07-01 00:48:16,787
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:50:10,797
+Server A Started @ 2021-07-01 20:58:31,488

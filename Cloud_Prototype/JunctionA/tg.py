@@ -35,7 +35,7 @@ class tg():
         self.functions = ['Get Logs', 'Suspend Junction', 'View Status']
         
 
-    def echo(self, update, context):
+    def menu(self, update, context):
         keyboard = [[InlineKeyboardButton("Get Logs", callback_data='{"Function": 0}'),InlineKeyboardButton("Suspend Junction", callback_data='{"Function": 1}')], [InlineKeyboardButton("View Junction Status", callback_data='{"Function": 2}')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         update.message.reply_text('Please Select:', reply_markup=reply_markup)
@@ -45,22 +45,31 @@ class tg():
 
 
 
-    def getLog(self, update, context):
+    def getLog(self,junctionIndex):
         #Let the user choose which Junction they would like to work on
         self.functionType = 0
-        output_name = 'Consolidated_log.log'
+        output_name = self.junctions[junctionIndex]+'_Consolidated_log.log'
         dataContent = ''
 
-        for i in range(self.port_range_start, self.port_range_end):
-            try:
-                channel = grpc.insecure_channel('localhost:'+str(i))
-                stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
-                response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
-                dataContent = dataContent + '\n'+ response.Content 
-            except grpc.RpcError as rpc_error:
-                #print(rpc_error)
-                if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-                    print('Port ' + str(i) +' is unavailable...')
+        # for i in range(self.port_range_start, self.port_range_end):
+        #     try:
+        #         channel = grpc.insecure_channel('localhost:'+str(i))
+        #         stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+        #         response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
+        #         dataContent = dataContent + '\n'+ response.Content 
+        #     except grpc.RpcError as rpc_error:
+        #         #print(rpc_error)
+        #         if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        #             print('Port ' + str(i) +' is unavailable...')
+        try:
+            channel = grpc.insecure_channel('localhost:'+str(self.controller_ports[junctionIndex]))
+            stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+            response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=0))
+            dataContent = dataContent + '\n'+ response.Content 
+        except grpc.RpcError as rpc_error:
+                    #print(rpc_error)
+            if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+                print('Port ' + str(self.controller_ports[junctionIndex]) +' is unavailable...')
             
         
         f = open(output_name, "w")
@@ -120,8 +129,9 @@ class tg():
             query.edit_message_text(text=f"Selected Junction: {self.junctions[ans['Junction']]}")
             
             if self.functionType == 0:
+                self.getLog(ans['Junction'])
                 #Run function 0,to get logs of one Junction 
-                query.message.reply_text('Running Get Log Function for '+self.junctions[ans['Junction']])
+                #query.message.reply_text('Running Get Log Function for '+self.junctions[ans['Junction']])
                 pass
             elif  self.functionType == 1:
                 query.message.reply_text('Running Suspend Function for '+self.junctions[ans['Junction']])
@@ -136,7 +146,7 @@ class tg():
         updater = Updater(self.bot_token , use_context=True)
         dp = updater.dispatcher
         dp.add_handler(CommandHandler('getLog',self.getLog))
-        dp.add_handler(CommandHandler('echo',self.echo))
+        dp.add_handler(CommandHandler('menu',self.menu))
         dp.add_handler(CallbackQueryHandler(self.handleUser))
         
         print("\nTelegram Board Initialized")

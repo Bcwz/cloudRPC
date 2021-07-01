@@ -32,3 +32,34 @@ Report Suspicious Vehicle sent to controller @ 2021-07-01 00:44:19,461
 Server A Started @ 2021-07-01 00:46:09,442
 Report Suspicious Vehicle sent to controller @ 2021-07-01 00:47:54,451
 Report Suspicious Vehicle sent to controller @ 2021-07-01 00:50:09,467
+Server A Started @ 2021-07-01 20:09:55,029
+Server A Started @ 2021-07-01 20:11:45,435
+Server A Started @ 2021-07-01 20:13:13,508
+Server A Started @ 2021-07-01 20:14:46,026
+Server A Started @ 2021-07-01 20:19:53,334
+Server A Started @ 2021-07-01 20:21:21,841
+Server A Started @ 2021-07-01 20:21:51,273
+Server A Started @ 2021-07-01 20:23:43,854
+Report Accident sent to controller @ 2021-07-01 20:25:57,867
+Server A Started @ 2021-07-01 20:32:23,201
+Server A Started @ 2021-07-01 20:33:28,967
+Server A Started @ 2021-07-01 20:34:36,981
+Server A Started @ 2021-07-01 20:34:44,286
+Server A Started @ 2021-07-01 20:36:01,003
+Server A Started @ 2021-07-01 20:37:11,180
+Exception calling application: name 'logOutDir' is not defined @ 2021-07-01 20:37:16,686
+Traceback (most recent call last):
+  File "C:\Users\Vincent\AppData\Local\Programs\Python\Python39\lib\site-packages\grpc\_server.py", line 444, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\Vincent\Documents\GitHub\cloudRPC\Cloud_Prototype\JunctionA\communicator.py", line 94, in getLogs
+    return assignment_prototype_pb2.logResponse(Content = dataContent,filename = logOutDir)
+NameError: name 'logOutDir' is not defined
+Server A Started @ 2021-07-01 20:38:19,625
+Report Accident sent to controller @ 2021-07-01 20:41:01,632
+Server A Started @ 2021-07-01 20:42:30,926
+Server A Started @ 2021-07-01 20:49:33,277
+Server A Started @ 2021-07-01 20:51:50,232
+Server A Started @ 2021-07-01 20:52:39,985
+Server A Started @ 2021-07-01 20:53:38,392
+Server A Started @ 2021-07-01 20:58:09,903
+Report Suspicious Vehicle sent to controller @ 2021-07-01 21:00:17,919

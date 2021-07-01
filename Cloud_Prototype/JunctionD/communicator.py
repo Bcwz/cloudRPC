@@ -16,10 +16,8 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
 
         self.head_client_port = client_head_port
         self.no_Of_client = 4 
-    def setName(self,name):
-        self.clientName = name
-    def setBot(self,bot):
-        self.bot = bot
+
+
     def requestFunction(self,port):
        
         try:
@@ -73,9 +71,26 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
             return assignment_prototype_pb2.RequestResponse(ResponseMsg ='This is your request: Nonsense!')
 
     def getLogs(self, request, context):
-        data = ''
-        print(logDir)
-        with open(logDir, 'r') as file:
-            data = file.read()
-        return assignment_prototype_pb2.logResponse(Content = data,filename = logOutDir)
+        dataContent = ''
+        
+        if(request.types == 0):
+            
+            for i in range(0, self.no_Of_client):
+                try:
+                    channel = grpc.insecure_channel('localhost:'+str(i + self.head_client_port ))
+                    stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+                    response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=1))
+                    dataContent = dataContent + '\n'+ response.Content 
+                except grpc.RpcError as rpc_error:
+                    #print(rpc_error)
+                    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+                        print('Port ' + str(i + self.head_client_port ) +' is unavailable...')
+            
+            return assignment_prototype_pb2.logResponse(Content = dataContent,filename = self.logOutDir)
+        elif (request.types == 1):
+            print(self.logDir)
+            with open(self.logDir, 'r') as file:
+                dataContent = file.read()
+        
+            return assignment_prototype_pb2.logResponse(Content = dataContent,filename = self.logOutDir)
 

@@ -1,0 +1,58 @@
+
+
+Server A Started @ 2021-07-01 00:04:00,776
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:06:10,782
+Server A Started @ 2021-07-01 00:08:50,609
+Report Accident sent to controller @ 2021-07-01 00:10:35,622
+Server A Started @ 2021-07-01 00:39:01,192
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:41:16,204
+Failed to communicate with Junction Controller @ 2021-07-01 00:41:20,305
+Failed to communicate with Junction Controller @ 2021-07-01 00:41:47,628
+Server A Started @ 2021-07-01 00:42:56,578
+Server A Started @ 2021-07-01 00:47:15,633
+Report Accident sent to controller @ 2021-07-01 00:49:30,644
+Report Accident sent to controller @ 2021-07-01 00:52:16,658
+Server A Started @ 2021-07-01 20:58:24,404
+
+Server A Started @ 2021-07-01 00:04:00,758
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:05:39,772
+Server A Started @ 2021-07-01 00:08:50,587
+Server A Started @ 2021-07-01 00:39:01,169
+Server A Started @ 2021-07-01 00:42:56,564
+Report Accident sent to controller @ 2021-07-01 00:45:04,572
+Failed to communicate with Junction Controller @ 2021-07-01 00:45:08,673
+Server A Started @ 2021-07-01 00:47:15,629
+Server A Started @ 2021-07-01 20:58:24,391
+
+Server A Started @ 2021-07-01 00:04:00,774
+Report Accident sent to controller @ 2021-07-01 00:05:53,778
+Server A Started @ 2021-07-01 00:08:46,497
+Server A Started @ 2021-07-01 00:08:50,588
+Report Accident sent to controller @ 2021-07-01 00:10:41,590
+Server A Started @ 2021-07-01 00:39:01,156
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:41:58,165
+Failed to communicate with Junction Controller @ 2021-07-01 00:42:02,246
+Server A Started @ 2021-07-01 00:42:56,565
+Report Suspicious Vehicle sent to controller @ 2021-07-01 00:45:15,575
+Failed to communicate with Junction Controller @ 2021-07-01 00:45:19,668
+Server A Started @ 2021-07-01 00:47:15,622
+Report Accident sent to controller @ 2021-07-01 00:50:12,622
+Report Accident sent to controller @ 2021-07-01 00:51:51,636
+Server A Started @ 2021-07-01 20:58:24,395
+
+Server A Started @ 2021-07-01 00:04:00,770
+Report Accident sent to controller @ 2021-07-01 00:06:09,784
+Server A Started @ 2021-07-01 00:08:50,583
+Report Accident sent to controller @ 2021-07-01 00:10:29,587
+Report Accident sent to controller @ 2021-07-01 00:13:05,601
+Failed to communicate with Junction Controller @ 2021-07-01 00:13:07,047
+Failed to communicate with Junction Controller @ 2021-07-01 00:13:09,674
+Server A Started @ 2021-07-01 00:39:01,172
+Report Accident sent to controller @ 2021-07-01 00:41:53,175
+Failed to communicate with Junction Controller @ 2021-07-01 00:41:57,276
+Server A Started @ 2021-07-01 00:42:56,562
+Report Accident sent to controller @ 2021-07-01 00:44:35,563
+Failed to communicate with Junction Controller @ 2021-07-01 00:44:39,657
+Failed to communicate with Junction Controller @ 2021-07-01 00:45:12,977
+Server A Started @ 2021-07-01 00:47:15,621
+Server A Started @ 2021-07-01 20:58:24,397

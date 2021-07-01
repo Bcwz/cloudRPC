@@ -28,10 +28,7 @@ time_gap = 30
 controller_port = 50066
 option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taffic Light Failure']
 
-
-#suspicious_vehicle = {'SK123A','SC1235B','ST9021A'}
-#Disabled the telegram (So called Send to LTA/Cloud)
-
+comm = communicator.communicator(name,None,None)
 #suspicious_vehicle = {'SK123A','SC1235B','ST9021A'}
 #Disabled the telegram (So called Send to LTA/Cloud)
 
@@ -91,7 +88,7 @@ def messageBox(messageHeader, message):
 def run_server():
     logging.info('Server A Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(communicator.communicator(name,None,None), server)
+    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(comm, server)
     server.add_insecure_port('[::]:'+str(host_port))
     server.start()
     server.wait_for_termination()
@@ -107,9 +104,10 @@ if __name__ == '__main__':
     #Simply said, what's done here is to run the server and every 30s, it will ping alive another machine...    
     
     try:
-        communicator.logDir = logDir
-        communicator.logOutDir = logOutDir
-        communicator.clientName = name
+        comm.logDir = logDir
+        comm.logOutDir = logOutDir
+        comm.clientName = name
+        print(comm.logDir)
 
         next_evt_trigger = random.randint(90,180)
         #threading.Thread(target=run_server, args=()).start()

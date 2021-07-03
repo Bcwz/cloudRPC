@@ -4,3 +4,5 @@ pip install python-telegram-bot
 Pip install telethon
 
 Pip install telebot
+
+pip install telegram-menu

@@ -3,54 +3,73 @@ from telethon.tl.types import InputPeerUser, InputPeerChannel
 from telethon import TelegramClient, sync, events
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler,CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-
-from fpdf import FPDF 
+import json 
+import os
 import telebot
 import requests
+import communicator
 import grpc
 import assignment_prototype_pb2
 import assignment_prototype_pb2_grpc
 
+script_dir = os.path.dirname(__file__)
+CA_path = "Cert/root-ca.pem"
+root_CA = os.path.join(script_dir, CA_path)
+key_path = "Cert/root-ca-key.pem"
+root_Key = os.path.join(script_dir, key_path)
+
 # Please keep this safe as this is the bot token....
 class tg():
-    def __init__(self):
+    def __init__(self, cName):
         self.bot_token = '1865636715:AAEmLEWQwrIIDTtWwVQVPxVwe5XFyvUulw0'
         self.bot_chatID = '347015062'
 
         self.logDir = ''
-        self.clientName = ''
+        self.clientName = cName
         
         self.port_range_start = 50051
         self.port_range_end = 50055
 
         self.port_range = [50051,50056,50061,50066]
-        self.no_Of_client = 4
+        self.controller_ports = [50055,50060,50065,50070]
 
+        self.no_Of_client = 4
         self.functionType = 0
 
-    def echo(self, update, context):
-        keyboard = [[InlineKeyboardButton("Junction A", callback_data='0')], [InlineKeyboardButton("Junction B", callback_data='1')],[InlineKeyboardButton("Junction C", callback_data='2')], [InlineKeyboardButton("Junction C", callback_data='2')], [InlineKeyboardButton("Junction D", callback_data='3')]]
+        self.junctions = ['JunctionA-Controller', 'JunctionB-Controller', 'JunctionC-Controller', 'JunctionD-Controller']
+        self.traffic_lights = ['TL-A', 'TL-B','TL-C','TL-D']
+        self.functions = ['Get Logs', 'Suspend Junction', 'View Status']
+        self.host = 'localhost'
+        
+
+    def menu(self, update, context):
+        keyboard = [[InlineKeyboardButton("Get Logs", callback_data='{"Function": 0}'),InlineKeyboardButton("Suspend/Unsuspend Junction", callback_data='{"Function": 1}')], [InlineKeyboardButton("View Junction Status", callback_data='{"Function": 2}')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         update.message.reply_text('Please Select:', reply_markup=reply_markup)
         
         #update.message.reply_text(update.message.text)
+    
 
-    def getLog(self, update, context):
+
+
+    def getLog(self,junctionIndex):
         #Let the user choose which Junction they would like to work on
         self.functionType = 0
-        output_name = 'Consolidated_log.log'
+        output_name = self.junctions[junctionIndex]+'_Consolidated_log.log'
         dataContent = ''
 
-        for i in range(self.port_range_start, self.port_range_end):
-            try:
-                channel = grpc.insecure_channel('localhost:'+str(i))
-                stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
-                response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
-                dataContent = dataContent + '\n'+ response.Content 
-            except grpc.RpcError as rpc_error:
-                #print(rpc_error)
-                if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-                    print('Port ' + str(i) +' is unavailable...')
+        try:
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(self.controller_ports[junctionIndex]), creds)
+            stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+            response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=0))
+            dataContent = dataContent + '\n'+ response.Content 
+        except grpc.RpcError as rpc_error:
+                    #print(rpc_error)
+            if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+                print('Port ' + str(self.controller_ports[junctionIndex]) +' is unavailable...')
             
         
         f = open(output_name, "w")
@@ -62,41 +81,90 @@ class tg():
         response = requests.post(send_file,  files=files)
         return response.json()
 
-    def suspendJunction(self, update, context):
-        self.functionType = 1
-        keyboard = [[InlineKeyboardButton("Suspend Junction", callback_data='1')], [InlineKeyboardButton("Get Logs", callback_data='0')]]
+    def suspendJunction(self,junctionIndex):
+        try:
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(self.controller_ports[junctionIndex]), creds)
+            stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+            
+            response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=5, RequestMsg='Request to get Suspend Traffic Junction'))
+            return response.ResponseMsg
+        except grpc.RpcError as rpc_error:
+                #print(rpc_error)
+            if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+                return self.junctions[junctionIndex] + ' : Offline'
+    
+    def viewStatus(self,junctionIndex):
+        try:
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(self.controller_ports[junctionIndex]), creds)
+            stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+            
+            response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=4, RequestMsg='Request to get Traffic Light Status'))
+            return response.ResponseMsg
+            #return content
+
+        except grpc.RpcError as rpc_error:
+                #print(rpc_error)
+            if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+                return self.junctions[junctionIndex] + ' : Offline'
+
+    def getJunction(self,query):
+        keyboard = [[InlineKeyboardButton("Junction A", callback_data='{"Junction": 0}'),InlineKeyboardButton("Junction B", callback_data='{"Junction": 1}')],  [InlineKeyboardButton("Junction C", callback_data='{"Junction": 2}'),InlineKeyboardButton("Junction D", callback_data='{"Junction": 3}')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        update.message.reply_text('Please Select:', reply_markup=reply_markup)
+        query.message.reply_text('Please Select:', reply_markup=reply_markup)
 
 
-
-    def button(self,update, context):
+    def handleUser(self,update, context):
         query = update.callback_query
 
         # CallbackQueries need to be answered, even if no notification to the user is needed
         # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
         query.answer()
-        if (self.functionType == 0):
-            self.functionType = 0.5
-            keyboard = [[InlineKeyboardButton("Junction A", callback_data='0')], [InlineKeyboardButton("Junction B", callback_data='1')], [InlineKeyboardButton("Junction C", callback_data='2')], [InlineKeyboardButton("Junction D", callback_data='3')]]
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            update.message.reply_text('Please Select:', reply_markup=reply_markup)
-
-            pass
-        elif (self.functionType == 1):
+        ans = json.loads(query.data)
+        if 'Function' in ans:
+            query.edit_message_text(text=f"Selected Function: {self.functions[ans['Function']]}")
+            self.functionType = ans['Function']
+            if self.functionType != 2:
+                self.getJunction(query)
+            else:
+                
+                AllStatus = ''
+                for i in range(0, self.no_Of_client):
+                    AllStatus = AllStatus+ self.viewStatus(i) + '\n'
+                query.edit_message_text(text=f"Selected Function: {self.functions[ans['Function']]}\n"+ AllStatus)
+                #Execute Function 2, to view Status of all Junctions
+                pass
+        elif 'Junction' in ans:
+            query.edit_message_text(text=f"Selected Junction: {self.junctions[ans['Junction']]}")
             
-            pass
-        else:
-            pass
-        query.edit_message_text(text=f"Selected Junction: {query.data}")
+            if self.functionType == 0:
+                #Run function 0,to get logs of one Junction 
+                self.getLog(ans['Junction'])
+                
+                #query.message.reply_text('Running Get Log Function for '+self.junctions[ans['Junction']])
+                pass
+            elif  self.functionType == 1:
+                result = self.suspendJunction(ans['Junction'])
+                query.edit_message_text(text=f"Selected Junction: {self.junctions[ans['Junction']]}\n"+ result)
+                #query.message.reply_text('Running Suspend Function for '+self.junctions[ans['Junction']])
+                #Run function 1,  to suspend one junction
+                pass
+
+ 
+        
 
 
     def telegram_start_server(self):
         updater = Updater(self.bot_token , use_context=True)
         dp = updater.dispatcher
         dp.add_handler(CommandHandler('getLog',self.getLog))
-        dp.add_handler(CommandHandler('echo',self.echo))
-        dp.add_handler(CallbackQueryHandler(self.button))
+        dp.add_handler(CommandHandler('menu',self.menu))
+        dp.add_handler(CallbackQueryHandler(self.handleUser))
         
         print("\nTelegram Board Initialized")
         updater.start_polling()
@@ -116,4 +184,3 @@ class tg():
         print(logDir)
         print(response.json())
         return response.json()
-

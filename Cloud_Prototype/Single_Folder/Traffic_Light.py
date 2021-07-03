@@ -119,7 +119,6 @@ if __name__ == '__main__':
     logging.basicConfig(filename=logDir, level=logging.INFO,format='%(message)s @ %(asctime)s')    
 
     #messageBox('Receive File','Are you sure to receive File?')
-
     #Basically, the general idea is to run both client and server example to perform distributed communications...
     #Simply said, what's done here is to run the server and every 30s, it will ping alive another machine...    
     

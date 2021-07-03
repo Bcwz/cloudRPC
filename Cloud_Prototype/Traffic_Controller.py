@@ -18,74 +18,93 @@ import tg
 import multiprocessing
 import _thread
 
+
 max_fail = 3
 fail_count = 0
-name = 'JunctionA-Controller'
+
+name = str(sys.argv[1])
+ping_target = str(sys.argv[2])
+host_port = int(sys.argv[4])
+ping_port = int(sys.argv[5])
+client_head_port = int(sys.argv[6])
 host = 'localhost'
-host_port = 50055
-#ping_port = 50055
+
 time_gap = 30
 num_of_TL = 4
 suspend = False
+option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taffic Light Failure']
+leader_controller = 50055
 
-bot = tg.tg()
+bot = tg.tg(name)
+comm = communicator.communicator(name,bot,client_head_port)
+
+script_dir = os.path.dirname(__file__)
+CA_path = "Cert/root-ca.pem"
+root_CA = os.path.join(script_dir, CA_path)
+key_path = "Cert/root-ca-key.pem"
+root_Key = os.path.join(script_dir, key_path)
+
 def run_server():
-    logging.info('Server Started')
+    logging.info('Server '+name +' Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(communicator.communicator(), server)
-    server.add_insecure_port('[::]:'+str(host_port))
+    with open(root_Key, 'rb') as f:
+        private_key = f.read()
+    with open(CA_path , 'rb') as f:
+        certificate_chain = f.read()
+
+    server_credentials = grpc.ssl_server_credentials( ( (private_key, certificate_chain), ) )
+    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(comm, server)
+    server.add_secure_port('[::]:'+str(host_port), server_credentials)
+    
     server.start()
     server.wait_for_termination()
 
-def forward_log(port):
-   
-    try:
-        
-        channel = grpc.insecure_channel(host + ':'+str(port))
-        stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
-        response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=3))
-        
-        f = open(response.filename, "w")
-        f.write(response.Content)
-        f.close()
+def start_telegram():
+    p = multiprocessing.Process(target=bot.telegram_start_server)
+    p.start()    
 
-        bot.logDir = response.filename
-        bot.telegram_bot_sendFiles()   
+def requestFunction(port, requestType):
+    
+    global fail_count
+    try:
+        with open(CA_path, 'rb') as f:
+            creds = grpc.ssl_channel_credentials(f.read())
+
+        channel = grpc.secure_channel(host + ':'+str(port), creds)
+        stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+        response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=requestType, RequestMsg= option_type[requestType] + ' From ' + name))
+        print(response.ResponseMsg)
+        threading.Timer(time_gap, requestFunction,[port,requestType]).start()
+        
+        if requestType == 0:
+            fail_count = 0
+
     except grpc.RpcError as rpc_error:
         #print(rpc_error)
         if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-            print('Port ' + str(port) +' is unavailable...')
+            if requestType == 0:
+                fail_count = fail_count + 1
+                if fail_count >= max_fail:
+                    print('Failed to ping ' + ping_target)
+                    fail_count = 0
+                    
+                threading.Timer(time_gap, requestFunction,[port,requestType]).start()
 
-
-
-def transfer_All_Logs():
-    
-    try:
-        for i in range(50051, 50055):
-            forward_log(i)
-            
-    except KeyboardInterrupt:
-        print('Process Killed')
-        try:
-            sys.exit(0)
-        except SystemExit:
-            os._exit(0)
-
-   
+            else:
+                print('Failed to ' + option_type[requestType])
 
 
 if __name__ == '__main__':
     logging.basicConfig(filename='Traffic_Controller.log', level=logging.INFO,format='%(message)s @ %(asctime)s')
       
     try:
-        #transfer_All_Logs()
-        #threading.Thread(target=run_server, args=()).start()
-        #run_server()
+
         p = multiprocessing.Process(target=run_server)
         p.start()
-        #threading.Thread(target=telegram_start_server, args=()).start()
+        threading.Timer(time_gap, requestFunction,[ping_port,0]).start()
         
-        bot.telegram_start_server()
+        if(str(sys.argv[3]) == 'DEFAULT'):
+            start_telegram()
 
     except KeyboardInterrupt:
         print('Process Killed')

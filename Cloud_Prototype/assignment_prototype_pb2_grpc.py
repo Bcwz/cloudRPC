@@ -10,7 +10,6 @@ class communicatorStub(object):
 
     def __init__(self, channel):
         """Constructor.
-
         Args:
             channel: A grpc.Channel.
         """

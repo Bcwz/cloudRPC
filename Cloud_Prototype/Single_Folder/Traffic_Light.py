@@ -32,6 +32,13 @@ controller_port = 50055
 
 option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taffic Light Failure']
 comm = communicator.communicator(name,None,None)
+
+script_dir = os.path.dirname(__file__)
+CA_path = "Cert/root-ca.pem"
+root_CA = os.path.join(script_dir, CA_path)
+key_path = "Cert/root-ca-key.pem"
+root_KEY = os.path.join(script_dir, key_path)
+
 #suspicious_vehicle = {'SK123A','SC1235B','ST9021A'}
 #Disabled the telegram (So called Send to LTA/Cloud)
 
@@ -39,9 +46,11 @@ comm = communicator.communicator(name,None,None)
 def requestFunction(port, requestType):
     global fail_count
     try:
-        channel = grpc.insecure_channel(host + ':'+str(port))
-        stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+        with open(root_CA, 'rb') as f:
+            creds = grpc.ssl_channel_credentials(f.read())
 
+        channel = grpc.secure_channel(host + ':'+str(port), creds)
+        stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
         response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=requestType, RequestMsg= option_type[requestType] + ' From ' + name))
         print(response.ResponseMsg)
         threading.Timer(time_gap, requestFunction,[port,requestType]).start()
@@ -89,10 +98,18 @@ def messageBox(messageHeader, message):
         tk.messagebox.showinfo('Return','You will now return to the application screen')
 
 def run_server():
-    logging.info('Server A Started')
+    logging.info('Server '+JunctionName+  ' Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+
+    with open(key_path, 'rb') as f:
+        private_key = f.read()
+
+    with open(CA_path, 'rb') as f:
+        certificate_chain = f.read()
+    
+    server_credentials = grpc.ssl_server_credentials( ( (private_key, certificate_chain), ) )
     assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(comm, server)
-    server.add_insecure_port('[::]:'+str(host_port))
+    server.add_secure_port('[::]:'+str(host_port), server_credentials)
     server.start()
     server.wait_for_termination()
 

@@ -29,27 +29,33 @@ ping_port = int(sys.argv[5])
 client_head_port = int(sys.argv[6])
 host = 'localhost'
 
-
 time_gap = 30
 num_of_TL = 4
 suspend = False
-
 option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taffic Light Failure']
-
-
 leader_controller = 50055
-
 
 bot = tg.tg(name)
 comm = communicator.communicator(name,bot,client_head_port)
 
+script_dir = os.path.dirname(__file__)
+CA_path = "Cert/root-ca.pem"
+root_CA = os.path.join(script_dir, CA_path)
+key_path = "Cert/root-ca-key.pem"
+root_Key = os.path.join(script_dir, key_path)
 
 def run_server():
     logging.info('Server '+name +' Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(comm, server)
+    with open(root_Key, 'rb') as f:
+        private_key = f.read()
+    with open(CA_path , 'rb') as f:
+        certificate_chain = f.read()
 
-    server.add_insecure_port('[::]:'+str(host_port))
+    server_credentials = grpc.ssl_server_credentials( ( (private_key, certificate_chain), ) )
+    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(comm, server)
+    server.add_secure_port('[::]:'+str(host_port), server_credentials)
+    
     server.start()
     server.wait_for_termination()
 
@@ -61,7 +67,10 @@ def requestFunction(port, requestType):
     
     global fail_count
     try:
-        channel = grpc.insecure_channel(host + ':'+str(port))
+        with open(CA_path, 'rb') as f:
+            creds = grpc.ssl_channel_credentials(f.read())
+
+        channel = grpc.secure_channel(host + ':'+str(port), creds)
         stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
         response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=requestType, RequestMsg= option_type[requestType] + ' From ' + name))
         print(response.ResponseMsg)

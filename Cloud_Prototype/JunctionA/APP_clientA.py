@@ -21,13 +21,10 @@ from tkinter import filedialog,messagebox
 name = 'TL-A'
 logDir = name+'_log.log'
 logOutDir = name + '_Output.log'
-
 ping_target = 'TL-B'
 time_gap = 30
-
 max_fail = 3
 fail_count = 0
-
 host = 'localhost'
 host_port = 50051
 ping_port = 50052
@@ -130,4 +127,3 @@ if __name__ == '__main__':
             sys.exit(0)
         except SystemExit:
             os._exit(0)
-

@@ -4,13 +4,19 @@ from telethon import TelegramClient, sync, events
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler,CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 import json 
-from fpdf import FPDF 
+import os
 import telebot
 import requests
 import communicator
 import grpc
 import assignment_prototype_pb2
 import assignment_prototype_pb2_grpc
+
+script_dir = os.path.dirname(__file__)
+CA_path = "Cert/root-ca.pem"
+root_CA = os.path.join(script_dir, CA_path)
+key_path = "Cert/root-ca-key.pem"
+root_Key = os.path.join(script_dir, key_path)
 
 # Please keep this safe as this is the bot token....
 class tg():
@@ -19,6 +25,10 @@ class tg():
         self.bot_chatID = '347015062'
 
         self.logDir = ''
+        self.clientName = cName
+        
+        self.port_range_start = 50051
+        self.port_range_end = 50055
 
         self.port_range = [50051,50056,50061,50066]
         self.controller_ports = [50055,50060,50065,50070]
@@ -29,6 +39,7 @@ class tg():
         self.junctions = ['JunctionA-Controller', 'JunctionB-Controller', 'JunctionC-Controller', 'JunctionD-Controller']
         self.traffic_lights = ['TL-A', 'TL-B','TL-C','TL-D']
         self.functions = ['Get Logs', 'Suspend Junction', 'View Status']
+        self.host = 'localhost'
         
 
     def menu(self, update, context):
@@ -38,6 +49,9 @@ class tg():
         
         #update.message.reply_text(update.message.text)
     
+
+
+
     def getLog(self,junctionIndex):
         #Let the user choose which Junction they would like to work on
         self.functionType = 0
@@ -45,11 +59,13 @@ class tg():
         dataContent = ''
 
         try:
-            channel = grpc.insecure_channel('localhost:'+str(self.controller_ports[junctionIndex]))
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(self.controller_ports[junctionIndex]), creds)
             stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
             response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=0))
-            dataContent = dataContent + '\n'+ response.Content
-
+            dataContent = dataContent + '\n'+ response.Content 
         except grpc.RpcError as rpc_error:
                     #print(rpc_error)
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
@@ -65,26 +81,16 @@ class tg():
         response = requests.post(send_file,  files=files)
         return response.json()
 
-    def suspendJunction(self,junctionIndex):
-        
-        try:
-            channel = grpc.insecure_channel('localhost:'+str(self.controller_ports[junctionIndex]))
-            stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
-
-            response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=0, RequestMsg='Suspend Junction'))
-            
-
-        except grpc.RpcError as rpc_error:
-                    #print(rpc_error)
-            if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-                print('Port ' + str(self.controller_ports[junctionIndex]) +' is unavailable...')
-        
+    def suspendJunction(self, update, context):
         pass
     
     
     def viewStatus(self,junctionIndex):
         try:
-            channel = grpc.insecure_channel('localhost:'+str(self.controller_ports[junctionIndex]))
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(self.controller_ports[junctionIndex]), creds)
             stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
             
             response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=4, RequestMsg='Request to get Traffic Light Status'))
@@ -126,15 +132,17 @@ class tg():
             query.edit_message_text(text=f"Selected Junction: {self.junctions[ans['Junction']]}")
             
             if self.functionType == 0:
-                #Run function 0,to get logs of one Junction 
                 self.getLog(ans['Junction'])
+                #Run function 0,to get logs of one Junction 
                 #query.message.reply_text('Running Get Log Function for '+self.junctions[ans['Junction']])
                 pass
-            elif self.functionType == 1:
-
+            elif  self.functionType == 1:
                 query.message.reply_text('Running Suspend Function for '+self.junctions[ans['Junction']])
                 #Run function 1,  to suspend one junction
                 pass
+
+ 
+        
 
 
     def telegram_start_server(self):
@@ -155,11 +163,10 @@ class tg():
         print(response)
         return response.json()
 
-    # def telegram_bot_sendFiles(self):
-    #     files = {'document': open(logDir)}
-    #     send_file = 'https://api.telegram.org/bot' + self.bot_token + '/sendDocument?chat_id=' + self.bot_chatID + '&caption=' + logDir
-    #     response = requests.post(send_file,  files=files)
-    #     print(logDir)
-    #     print(response.json())
-    #     return response.json()
-
+    def telegram_bot_sendFiles(self):
+        files = {'document': open(logDir)}
+        send_file = 'https://api.telegram.org/bot' + self.bot_token + '/sendDocument?chat_id=' + self.bot_chatID + '&caption=' + logDir
+        response = requests.post(send_file,  files=files)
+        print(logDir)
+        print(response.json())
+        return response.json()

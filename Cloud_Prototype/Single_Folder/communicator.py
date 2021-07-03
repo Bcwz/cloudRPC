@@ -3,6 +3,15 @@ import assignment_prototype_pb2
 import assignment_prototype_pb2_grpc
 #from tg import telegram_bot_sendtext, telegram_start_server
 import tg
+import os
+
+
+script_dir = os.path.dirname(__file__)
+CA_path = "Cert/root-ca.pem"
+root_CA = os.path.join(script_dir, CA_path)
+key_path = "Cert/root-ca-key.pem"
+root_Key = os.path.join(script_dir, key_path)
+
 class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
 
     def __init__(self,cName,bot,client_head_port):
@@ -17,16 +26,17 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
 
         self.head_client_port = client_head_port
         self.no_Of_client = 4 
+        self.host = 'localhost'
 
-        self.client = None
-
-        self.info = None
 
 
     def requestFunction(self,port):
        
         try:
-            channel = grpc.insecure_channel('localhost:'+str(port))
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(port), creds)
             stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
             
             response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=0, RequestMsg= 'Ping From ' + self.clientName))
@@ -87,7 +97,9 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
             
             for i in range(0, self.no_Of_client):
                 try:
-                    channel = grpc.insecure_channel('localhost:'+str(i + self.head_client_port))
+                    with open(root_CA, 'rb') as f:
+                        creds = grpc.ssl_channel_credentials(f.read())
+                    channel = grpc.secure_channel(self.host + ':'+str(i + self.head_client_port ), creds)
                     stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
                     response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=1))
                     dataContent = dataContent + '\n'+ response.Content

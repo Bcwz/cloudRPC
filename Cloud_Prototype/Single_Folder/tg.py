@@ -4,13 +4,19 @@ from telethon import TelegramClient, sync, events
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler,CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 import json 
-from fpdf import FPDF 
+import os
 import telebot
 import requests
 import communicator
 import grpc
 import assignment_prototype_pb2
 import assignment_prototype_pb2_grpc
+
+script_dir = os.path.dirname(__file__)
+CA_path = "Cert/root-ca.pem"
+root_CA = os.path.join(script_dir, CA_path)
+key_path = "Cert/root-ca-key.pem"
+root_Key = os.path.join(script_dir, key_path)
 
 # Please keep this safe as this is the bot token....
 class tg():
@@ -33,6 +39,7 @@ class tg():
         self.junctions = ['JunctionA-Controller', 'JunctionB-Controller', 'JunctionC-Controller', 'JunctionD-Controller']
         self.traffic_lights = ['TL-A', 'TL-B','TL-C','TL-D']
         self.functions = ['Get Logs', 'Suspend Junction', 'View Status']
+        self.host = 'localhost'
         
 
     def menu(self, update, context):
@@ -52,7 +59,10 @@ class tg():
         dataContent = ''
 
         try:
-            channel = grpc.insecure_channel('localhost:'+str(self.controller_ports[junctionIndex]))
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(self.controller_ports[junctionIndex]), creds)
             stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
             response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=0))
             dataContent = dataContent + '\n'+ response.Content 
@@ -77,7 +87,10 @@ class tg():
     
     def viewStatus(self,junctionIndex):
         try:
-            channel = grpc.insecure_channel('localhost:'+str(self.controller_ports[junctionIndex]))
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(self.controller_ports[junctionIndex]), creds)
             stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
             
             response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=4, RequestMsg='Request to get Traffic Light Status'))

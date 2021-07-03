@@ -1,0 +1,38 @@
+
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.assignment_prototype";
+option java_outer_classname = "AssignmentPrototypeProto";
+option objc_class_prefix = "APP";
+
+package assignment_prototype;
+
+service communicator {
+   rpc makerequest(RequestCall) returns (RequestResponse) {}
+   rpc getLogs(RequestLog) returns (logResponse){}
+
+}
+
+message RequestCall{
+  int32 type = 1;
+  string RequestMsg = 2;
+  
+}
+
+message RequestResponse{
+  string ResponseMsg = 1;
+}
+
+message RequestLog{
+  int32 types = 1;
+  
+}
+
+message logResponse{
+    string Content = 1;
+    string filename = 2;
+    
+}
+

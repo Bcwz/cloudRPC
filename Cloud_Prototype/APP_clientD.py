@@ -11,37 +11,31 @@ import assignment_prototype_pb2
 import assignment_prototype_pb2_grpc
 import random
 import communicator
-import tg
+import requests
+import _thread
 
-JunctionName = str(sys.argv[1])
-name = str(sys.argv[2])
-ping_target = str(sys.argv[3]) 
-host_port = int(sys.argv[4]) 
-ping_port = int(sys.argv[5]) 
-
-logDir = JunctionName+ '_'+name+'_log.log'
-logOutDir = JunctionName+ '_'+ name + '_Output.log'
-
-
-time_gap = 30
 max_fail = 3
 fail_count = 0
+name = 'TL-D'
+logDir = name+'_log.log'
+logOutDir = name + '_Output.log'
 host = 'localhost'
+host_port = 50054
+ping_port = 50051
+ping_target = 'A'
+time_gap = 30
 
 controller_port = 50055
-
 option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taffic Light Failure']
-comm = communicator.communicator(name,None,None)
+
 #suspicious_vehicle = {'SK123A','SC1235B','ST9021A'}
 #Disabled the telegram (So called Send to LTA/Cloud)
-
-  
+    
 def requestFunction(port, requestType):
     global fail_count
     try:
         channel = grpc.insecure_channel(host + ':'+str(port))
         stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
-
         response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=requestType, RequestMsg= option_type[requestType] + ' From ' + name))
         print(response.ResponseMsg)
         threading.Timer(time_gap, requestFunction,[port,requestType]).start()
@@ -56,8 +50,9 @@ def requestFunction(port, requestType):
                 if fail_count >= max_fail:
                 #Call the Cloud Services when failed to ping Traffic Light B
                     print('Failed to ping Traffic Light ' + ping_target)
-                    requestFunction(controller_port, 3)
                     fail_count = 0
+                    requestFunction(controller_port, 3)
+                    
                 threading.Timer(time_gap, requestFunction,[port,requestType]).start()
 
             else:
@@ -78,20 +73,11 @@ def random_Event():
     logging.info(option_type[evt] + ' sent to controller')
     threading.Timer( next_evt_trigger, random_Event).start()
 
-def messageBox(messageHeader, message):
-    root= tk.Tk()
-    root.withdraw()
-
-    MsgBox = tk.messagebox.askquestion (messageHeader,message,icon = 'warning')
-    if MsgBox == 'yes':
-       root.destroy()
-    else:
-        tk.messagebox.showinfo('Return','You will now return to the application screen')
 
 def run_server():
-    logging.info('Server A Started')
+    logging.info('Server D Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(comm, server)
+    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(communicator.communicator(), server)
     server.add_insecure_port('[::]:'+str(host_port))
     server.start()
     server.wait_for_termination()
@@ -101,16 +87,15 @@ def run_server():
 if __name__ == '__main__':
     logging.basicConfig(filename=logDir, level=logging.INFO,format='%(message)s @ %(asctime)s')    
 
-    #messageBox('Receive File','Are you sure to receive File?')
+    
 
     #Basically, the general idea is to run both client and server example to perform distributed communications...
     #Simply said, what's done here is to run the server and every 30s, it will ping alive another machine...    
     
     try:
-        comm.logDir = logDir
-        comm.logOutDir = logOutDir
-        comm.clientName = name
-        print(comm.logDir)
+        communicator.logDir = logDir
+        communicator.logOutDir = logOutDir
+        communicator.clientName = name
 
         next_evt_trigger = random.randint(90,180)
         #threading.Thread(target=run_server, args=()).start()
@@ -125,3 +110,4 @@ if __name__ == '__main__':
             sys.exit(0)
         except SystemExit:
             os._exit(0)
+

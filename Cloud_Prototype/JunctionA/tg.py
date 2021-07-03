@@ -19,10 +19,6 @@ class tg():
         self.bot_chatID = '347015062'
 
         self.logDir = ''
-        self.clientName = cName
-        
-        self.port_range_start = 50051
-        self.port_range_end = 50055
 
         self.port_range = [50051,50056,50061,50066]
         self.controller_ports = [50055,50060,50065,50070]
@@ -42,9 +38,6 @@ class tg():
         
         #update.message.reply_text(update.message.text)
     
-
-
-
     def getLog(self,junctionIndex):
         #Let the user choose which Junction they would like to work on
         self.functionType = 0
@@ -55,7 +48,8 @@ class tg():
             channel = grpc.insecure_channel('localhost:'+str(self.controller_ports[junctionIndex]))
             stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
             response = stub.getLogs(assignment_prototype_pb2.RequestLog(types=0))
-            dataContent = dataContent + '\n'+ response.Content 
+            dataContent = dataContent + '\n'+ response.Content
+
         except grpc.RpcError as rpc_error:
                     #print(rpc_error)
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
@@ -71,7 +65,20 @@ class tg():
         response = requests.post(send_file,  files=files)
         return response.json()
 
-    def suspendJunction(self, update, context):
+    def suspendJunction(self,junctionIndex):
+        
+        try:
+            channel = grpc.insecure_channel('localhost:'+str(self.controller_ports[junctionIndex]))
+            stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+
+            response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=0, RequestMsg='Suspend Junction'))
+            
+
+        except grpc.RpcError as rpc_error:
+                    #print(rpc_error)
+            if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+                print('Port ' + str(self.controller_ports[junctionIndex]) +' is unavailable...')
+        
         pass
     
     
@@ -119,17 +126,15 @@ class tg():
             query.edit_message_text(text=f"Selected Junction: {self.junctions[ans['Junction']]}")
             
             if self.functionType == 0:
-                self.getLog(ans['Junction'])
                 #Run function 0,to get logs of one Junction 
+                self.getLog(ans['Junction'])
                 #query.message.reply_text('Running Get Log Function for '+self.junctions[ans['Junction']])
                 pass
-            elif  self.functionType == 1:
+            elif self.functionType == 1:
+
                 query.message.reply_text('Running Suspend Function for '+self.junctions[ans['Junction']])
                 #Run function 1,  to suspend one junction
                 pass
-
- 
-        
 
 
     def telegram_start_server(self):
@@ -150,10 +155,11 @@ class tg():
         print(response)
         return response.json()
 
-    def telegram_bot_sendFiles(self):
-        files = {'document': open(logDir)}
-        send_file = 'https://api.telegram.org/bot' + self.bot_token + '/sendDocument?chat_id=' + self.bot_chatID + '&caption=' + logDir
-        response = requests.post(send_file,  files=files)
-        print(logDir)
-        print(response.json())
-        return response.json()
+    # def telegram_bot_sendFiles(self):
+    #     files = {'document': open(logDir)}
+    #     send_file = 'https://api.telegram.org/bot' + self.bot_token + '/sendDocument?chat_id=' + self.bot_chatID + '&caption=' + logDir
+    #     response = requests.post(send_file,  files=files)
+    #     print(logDir)
+    #     print(response.json())
+    #     return response.json()
+

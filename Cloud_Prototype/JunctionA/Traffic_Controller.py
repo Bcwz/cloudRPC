@@ -24,9 +24,9 @@ fail_count = 0
 
 name = str(sys.argv[1])
 ping_target = str(sys.argv[2])
-host_port = int(sys.argv[4])
-ping_port = int(sys.argv[5])
-client_head_port = int(sys.argv[6])
+host_port = int(sys.argv[3])
+ping_port = int(sys.argv[4])
+
 host = 'localhost'
 
 
@@ -36,7 +36,7 @@ suspend = False
 
 option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taffic Light Failure']
 
-
+client_head_port = 50051
 leader_controller = 50055
 
 
@@ -93,9 +93,7 @@ if __name__ == '__main__':
         p = multiprocessing.Process(target=run_server)
         p.start()
         threading.Timer(time_gap, requestFunction,[ping_port,0]).start()
-        
-        if(str(sys.argv[3]) == 'DEFAULT'):
-            start_telegram()
+        start_telegram()
 
     except KeyboardInterrupt:
         print('Process Killed')

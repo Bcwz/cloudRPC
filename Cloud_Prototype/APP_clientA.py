@@ -11,31 +11,32 @@ import assignment_prototype_pb2
 import assignment_prototype_pb2_grpc
 import random
 import communicator
-import tg
-
-JunctionName = str(sys.argv[1])
-name = str(sys.argv[2])
-ping_target = str(sys.argv[3]) 
-host_port = int(sys.argv[4]) 
-ping_port = int(sys.argv[5]) 
-
-logDir = JunctionName+ '_'+name+'_log.log'
-logOutDir = JunctionName+ '_'+ name + '_Output.log'
+import requests
+import _thread
+import tkinter as tk
+from tkinter import filedialog,messagebox
 
 
+
+name = 'TL-A'
+logDir = name+'_log.log'
+logOutDir = name + '_Output.log'
+ping_target = 'B'
 time_gap = 30
 max_fail = 3
 fail_count = 0
 host = 'localhost'
+host_port = 50051
+ping_port = 50052
 
 controller_port = 50055
-
 option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taffic Light Failure']
-comm = communicator.communicator(name,None,None)
+
+
 #suspicious_vehicle = {'SK123A','SC1235B','ST9021A'}
 #Disabled the telegram (So called Send to LTA/Cloud)
 
-  
+    
 def requestFunction(port, requestType):
     global fail_count
     try:
@@ -91,7 +92,7 @@ def messageBox(messageHeader, message):
 def run_server():
     logging.info('Server A Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(comm, server)
+    assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(communicator.communicator(), server)
     server.add_insecure_port('[::]:'+str(host_port))
     server.start()
     server.wait_for_termination()
@@ -107,10 +108,9 @@ if __name__ == '__main__':
     #Simply said, what's done here is to run the server and every 30s, it will ping alive another machine...    
     
     try:
-        comm.logDir = logDir
-        comm.logOutDir = logOutDir
-        comm.clientName = name
-        print(comm.logDir)
+        communicator.logDir = logDir
+        communicator.logOutDir = logOutDir
+        communicator.clientName = name
 
         next_evt_trigger = random.randint(90,180)
         #threading.Thread(target=run_server, args=()).start()
@@ -125,3 +125,4 @@ if __name__ == '__main__':
             sys.exit(0)
         except SystemExit:
             os._exit(0)
+

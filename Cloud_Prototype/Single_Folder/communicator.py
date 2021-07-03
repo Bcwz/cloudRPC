@@ -27,6 +27,7 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
         self.head_client_port = client_head_port
         self.no_Of_client = 4 
         self.host = 'localhost'
+        self.suspended = False
 
 
 
@@ -73,19 +74,25 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
 
         elif(request.type == 4): 
             # Only meant for tg to traffic controller
-            response = self.clientName + ' : online\n'
-            for i in range(0, self.no_Of_client):
-                if(self.requestFunction(self.head_client_port + i)):
-                    response = response + self.traffic_lights[i] + " : online\n"
-                else:
-                    response = response + self.traffic_lights[i] + " : offline\n"
-
-
+            if(self.suspended == False):
+                response = self.clientName + ' : Online\n'
+                for i in range(0, self.no_Of_client):
+                    if(self.requestFunction(self.head_client_port + i)):
+                        response = response + self.traffic_lights[i] + " : Online\n"
+                    else:
+                        response = response + self.traffic_lights[i] + " : Offline\n"
+            else:
+                response = self.clientName + ' : Suspended\n'
             return assignment_prototype_pb2.RequestResponse(ResponseMsg = response)
 
         elif (request.type == 5):
             
-            pass
+            if(self.suspended == True):
+                self.suspended = False
+                return assignment_prototype_pb2.RequestResponse(ResponseMsg ='Unsuspended Successfully')
+            else:
+                self.suspended = True
+                return assignment_prototype_pb2.RequestResponse(ResponseMsg ='Suspended Successfully')
 
         else:
             return assignment_prototype_pb2.RequestResponse(ResponseMsg ='This is your request: Nonsense!')

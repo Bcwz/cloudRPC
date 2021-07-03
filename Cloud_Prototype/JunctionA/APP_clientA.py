@@ -91,7 +91,7 @@ def messageBox(messageHeader, message):
         tk.messagebox.showinfo('Return','You will now return to the application screen')
 
 def run_server():
-    logging.info('Server A Started')
+    logging.info('Server '+junctionName+' Started')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     assignment_prototype_pb2_grpc.add_communicatorServicer_to_server(comm, server)
     server.add_insecure_port('[::]:'+str(host_port))

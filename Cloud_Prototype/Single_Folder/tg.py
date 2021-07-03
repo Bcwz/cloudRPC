@@ -43,7 +43,7 @@ class tg():
         
 
     def menu(self, update, context):
-        keyboard = [[InlineKeyboardButton("Get Logs", callback_data='{"Function": 0}'),InlineKeyboardButton("Suspend Junction", callback_data='{"Function": 1}')], [InlineKeyboardButton("View Junction Status", callback_data='{"Function": 2}')]]
+        keyboard = [[InlineKeyboardButton("Get Logs", callback_data='{"Function": 0}'),InlineKeyboardButton("Suspend/Unsuspend Junction", callback_data='{"Function": 1}')], [InlineKeyboardButton("View Junction Status", callback_data='{"Function": 2}')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         update.message.reply_text('Please Select:', reply_markup=reply_markup)
         
@@ -81,9 +81,20 @@ class tg():
         response = requests.post(send_file,  files=files)
         return response.json()
 
-    def suspendJunction(self, update, context):
-        pass
-    
+    def suspendJunction(self,junctionIndex):
+        try:
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(self.controller_ports[junctionIndex]), creds)
+            stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+            
+            response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=5, RequestMsg='Request to get Suspend Traffic Junction'))
+            return response.ResponseMsg
+        except grpc.RpcError as rpc_error:
+                #print(rpc_error)
+            if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+                return self.junctions[junctionIndex] + ' : Offline'
     
     def viewStatus(self,junctionIndex):
         try:
@@ -100,7 +111,7 @@ class tg():
         except grpc.RpcError as rpc_error:
                 #print(rpc_error)
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-                return self.junctions[junctionIndex] + ' is currently offline'
+                return self.junctions[junctionIndex] + ' : Offline'
 
     def getJunction(self,query):
         keyboard = [[InlineKeyboardButton("Junction A", callback_data='{"Junction": 0}'),InlineKeyboardButton("Junction B", callback_data='{"Junction": 1}')],  [InlineKeyboardButton("Junction C", callback_data='{"Junction": 2}'),InlineKeyboardButton("Junction D", callback_data='{"Junction": 3}')]]
@@ -125,19 +136,22 @@ class tg():
                 AllStatus = ''
                 for i in range(0, self.no_Of_client):
                     AllStatus = AllStatus+ self.viewStatus(i) + '\n'
-                query.message.reply_text(AllStatus)
+                query.edit_message_text(text=f"Selected Function: {self.functions[ans['Function']]}\n"+ AllStatus)
                 #Execute Function 2, to view Status of all Junctions
                 pass
         elif 'Junction' in ans:
             query.edit_message_text(text=f"Selected Junction: {self.junctions[ans['Junction']]}")
             
             if self.functionType == 0:
-                self.getLog(ans['Junction'])
                 #Run function 0,to get logs of one Junction 
+                self.getLog(ans['Junction'])
+                
                 #query.message.reply_text('Running Get Log Function for '+self.junctions[ans['Junction']])
                 pass
             elif  self.functionType == 1:
-                query.message.reply_text('Running Suspend Function for '+self.junctions[ans['Junction']])
+                result = self.suspendJunction(ans['Junction'])
+                query.edit_message_text(text=f"Selected Junction: {self.junctions[ans['Junction']]}\n"+ result)
+                #query.message.reply_text('Running Suspend Function for '+self.junctions[ans['Junction']])
                 #Run function 1,  to suspend one junction
                 pass
 

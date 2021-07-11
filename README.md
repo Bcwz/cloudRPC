@@ -6,6 +6,7 @@ To execute and run all functions:
 Run_ME.bat to run all Traffic junctions and Traffic Lights
 
 Commands to execute functions via Telegram:
+
 Menu  Retrival: /menu
 To view and select the functions to execute
 

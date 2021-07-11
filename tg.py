@@ -118,7 +118,6 @@ class tg():
         reply_markup = InlineKeyboardMarkup(keyboard)
         query.message.reply_text('Please Select:', reply_markup=reply_markup)
 
-
     def handleUser(self,update, context):
         query = update.callback_query
 
@@ -129,10 +128,10 @@ class tg():
         if 'Function' in ans:
             query.edit_message_text(text=f"Selected Function: {self.functions[ans['Function']]}")
             self.functionType = ans['Function']
+
             if self.functionType != 2:
                 self.lta_get_Junction(query)
             else:
-                
                 AllStatus = ''
                 for i in range(0, self.no_Of_client):
                     AllStatus = AllStatus+ self.lta_view_Status(i) + '\n'

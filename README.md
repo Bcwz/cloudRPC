@@ -1,6 +1,14 @@
 # cloudRPC
+pip install --upgrade pip
+
+pip install grpcio
+
+pip install protobuf
+
 pip install python-telegram-bot
 
-Pip install telethon
+pip install telethon
 
-Pip install telebot
+pip install telebot
+
+pip install telegram-menu

@@ -121,15 +121,13 @@ class tg():
         query.message.reply_text('Please Select:', reply_markup=reply_markup)
 
        # Function for routing from Point A to Point B
-    def viewRoute(self,query):       
-        starting_location = ''
-        ending_location = ''     
+    def viewRoute(self,query):          
         keyboard = [[InlineKeyboardButton("Junction A", callback_data='{"Junction": 0}'),InlineKeyboardButton("Junction B", callback_data='{"Junction": 1}')],  [InlineKeyboardButton("Junction C", callback_data='{"Junction": 2}'),InlineKeyboardButton("Junction D", callback_data='{"Junction": 3}')]]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        query.message.reply_text('Please select STARTING location / junction:', reply_markup=reply_markup)
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        query.message.reply_text('Please select ENDING location / junction:', reply_markup=reply_markup)
-
+        reply_markup_start = InlineKeyboardMarkup(keyboard)
+        reply_markup_end = InlineKeyboardMarkup(keyboard)
+        query.message.reply_text('Please select STARTING location / junction:', reply_markup=reply_markup_start)
+        query.message.reply_text('Please select ENDING location / junction:', reply_markup=reply_markup_end)
+        return reply_markup_start, reply_markup_end
 
     def handleUser(self,update, context):
         query = update.callback_query
@@ -168,6 +166,11 @@ class tg():
                 #query.message.reply_text('Running Suspend Function for '+self.junctions[ans['Junction']])
                 #Run function 1,  to suspend one junction
                 pass
+            elif self.functionType == 3:
+                start_location = {self.junctions[ans['Junction']]}
+                end_location = {self.junctions[ans['Junction']]}
+                query.edit_message_text(text=f"Starting location:"+ start_location)
+                query.edit_message_text(text=f"Ending location:"+ end_location)
 
 
  

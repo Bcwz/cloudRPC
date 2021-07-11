@@ -18,7 +18,7 @@ name = str(sys.argv[2])
 ping_target = str(sys.argv[3]) 
 host_port = int(sys.argv[4]) 
 ping_port = int(sys.argv[5]) 
-
+currentColor = str(sys.argv[6])
 logDir = JunctionName+ '_'+name+'_log.log'
 logOutDir = JunctionName+ '_'+ name + '_Output.log'
 
@@ -31,7 +31,7 @@ host = 'localhost'
 controller_port = 50055
 
 option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taffic Light Failure']
-comm = communicator.communicator(name,None,None)
+comm = communicator.communicator(name,None,None,currentColor)
 
 script_dir = os.path.dirname(__file__)
 CA_path = "Cert/root-ca.pem"
@@ -114,6 +114,10 @@ def run_server():
     server.wait_for_termination()
 
 
+def change_traffic_light_color():
+    comm.swapColor()
+    print('Current Light Color: ' + comm.currentColor)
+    threading.Timer(time_gap, change_traffic_light_color).start()
 
 if __name__ == '__main__':
     logging.basicConfig(filename=logDir, level=logging.INFO,format='%(message)s @ %(asctime)s')    
@@ -133,6 +137,7 @@ if __name__ == '__main__':
         
         threading.Timer(next_evt_trigger, random_Event).start()
         threading.Timer(time_gap, requestFunction,[ping_port,0]).start()
+        threading.Timer(time_gap, change_traffic_light_color).start()
         run_server()
 
     except KeyboardInterrupt:

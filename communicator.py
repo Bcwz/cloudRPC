@@ -14,7 +14,7 @@ root_Key = os.path.join(script_dir, key_path)
 
 class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
 
-    def __init__(self,cName,bot,client_head_port):
+    def __init__(self,cName,bot,client_head_port,color):
         self.clientName = cName
         
         self.logDir = ''
@@ -29,7 +29,13 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
         self.host = 'localhost'
         self.suspended = False
 
+        self.currentColor = color
 
+    def swapColor(self):
+        if self.currentColor == 'Green':
+            self.currentColor = 'Red'
+        else:
+            self.currentColor = 'Green'
 
     def requestFunction(self,port):
        
@@ -40,9 +46,9 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
             channel = grpc.secure_channel(self.host + ':'+str(port), creds)
             stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
             
-            response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=0, RequestMsg= 'Ping From ' + self.clientName))
+            response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=7, RequestMsg= 'Ping From ' + self.clientName))
             print('Ping Port:' +str(port))
-            return True
+            return response.ResponseMsg
 
         except grpc.RpcError as rpc_error:
             #print(rpc_error)
@@ -77,8 +83,9 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
             if(self.suspended == False):
                 response = self.clientName + ' : Online\n'
                 for i in range(0, self.no_Of_client):
-                    if(self.requestFunction(self.head_client_port + i)):
-                        response = response + self.traffic_lights[i] + " : Online\n"
+                    currentColor = self.requestFunction(self.head_client_port + i)
+                    if(currentColor != False):
+                        response = response + self.traffic_lights[i] +" : "+currentColor +" Light\n"
                     else:
                         response = response + self.traffic_lights[i] + " : Offline\n"
             else:
@@ -93,6 +100,17 @@ class communicator(assignment_prototype_pb2_grpc.communicatorServicer):
             else:
                 self.suspended = True
                 return assignment_prototype_pb2.RequestResponse(ResponseMsg ='Suspended Successfully')
+
+        elif (request.type == 6): 
+            # Only meant for tg to traffic controller
+            if(self.suspended == True):
+                response = self.clientName + '\n'
+                return assignment_prototype_pb2.RequestResponse(ResponseMsg = response)
+            else:
+                return assignment_prototype_pb2.RequestResponse(ResponseMsg = "None")
+        elif(request.type == 7):
+            print('Request Received: ' + request.RequestMsg)
+            return assignment_prototype_pb2.RequestResponse(ResponseMsg = self.currentColor)
 
         else:
             return assignment_prototype_pb2.RequestResponse(ResponseMsg ='This is your request: Nonsense!')

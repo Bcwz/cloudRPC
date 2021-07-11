@@ -27,6 +27,7 @@ ping_target = str(sys.argv[2])
 host_port = int(sys.argv[4])
 ping_port = int(sys.argv[5])
 client_head_port = int(sys.argv[6])
+
 host = 'localhost'
 
 time_gap = 30
@@ -36,7 +37,7 @@ option_type = ['Ping','Report Accident', 'Report Suspicious Vehicle','Report Taf
 leader_controller = 50055
 
 bot = tg.tg(name)
-comm = communicator.communicator(name,bot,client_head_port)
+comm = communicator.communicator(name,bot,client_head_port,None)
 
 script_dir = os.path.dirname(__file__)
 CA_path = "Cert/root-ca.pem"
@@ -60,8 +61,11 @@ def run_server():
     server.wait_for_termination()
 
 def start_telegram():
-    p = multiprocessing.Process(target=bot.telegram_start_server)
-    p.start()    
+    lta = multiprocessing.Process(target=bot.telegram_start_lta_server)
+    lta.start()    
+
+    driver = multiprocessing.Process(target=bot.telegram_start_driver_server)
+    driver.start()    
 
 def requestFunction(port, requestType):
     

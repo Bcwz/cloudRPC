@@ -21,7 +21,8 @@ root_Key = os.path.join(script_dir, key_path)
 # Please keep this safe as this is the bot token....
 class tg():
     def __init__(self, cName):
-        self.bot_token = '1865636715:AAEmLEWQwrIIDTtWwVQVPxVwe5XFyvUulw0'
+        self.lta_bot_token = '<LTA BotID>'
+        self.driver_bot_token = '<Driver BotID>'
         self.bot_chatID = '347015062'
 
         self.logDir = ''
@@ -39,6 +40,7 @@ class tg():
         self.junctions = ['JunctionA-Controller', 'JunctionB-Controller', 'JunctionC-Controller', 'JunctionD-Controller']
         self.traffic_lights = ['TL-A', 'TL-B','TL-C','TL-D']
         self.functions = ['Get Logs', 'Suspend Junction', 'View Status']
+
         self.host = 'localhost'
         
 
@@ -46,13 +48,11 @@ class tg():
         keyboard = [[InlineKeyboardButton("Get Logs", callback_data='{"Function": 0}'),InlineKeyboardButton("Suspend/Unsuspend Junction", callback_data='{"Function": 1}')], [InlineKeyboardButton("View Junction Status", callback_data='{"Function": 2}')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         update.message.reply_text('Please Select:', reply_markup=reply_markup)
-        
-        #update.message.reply_text(update.message.text)
-    
 
 
 
-    def getLog(self,junctionIndex):
+
+    def lta_get_Log(self,junctionIndex):
         #Let the user choose which Junction they would like to work on
         self.functionType = 0
         output_name = self.junctions[junctionIndex]+'_Consolidated_log.log'
@@ -77,11 +77,11 @@ class tg():
         f.close()
 
         files = {'document': open(output_name)}
-        send_file = 'https://api.telegram.org/bot' + self.bot_token + '/sendDocument?chat_id=' + self.bot_chatID + '&caption=Consolidated-Logs' 
+        send_file = 'https://api.telegram.org/bot' + self.lta_bot_token + '/sendDocument?chat_id=' + self.bot_chatID + '&caption=Consolidated-Logs' 
         response = requests.post(send_file,  files=files)
         return response.json()
 
-    def suspendJunction(self,junctionIndex):
+    def lta_suspend_Junction(self,junctionIndex):
         try:
             with open(CA_path, 'rb') as f:
                 creds = grpc.ssl_channel_credentials(f.read())
@@ -96,7 +96,7 @@ class tg():
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 return self.junctions[junctionIndex] + ' : Offline'
     
-    def viewStatus(self,junctionIndex):
+    def lta_view_Status(self,junctionIndex):
         try:
             with open(CA_path, 'rb') as f:
                 creds = grpc.ssl_channel_credentials(f.read())
@@ -113,7 +113,7 @@ class tg():
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 return self.junctions[junctionIndex] + ' : Offline'
 
-    def getJunction(self,query):
+    def lta_get_Junction(self,query):
         keyboard = [[InlineKeyboardButton("Junction A", callback_data='{"Junction": 0}'),InlineKeyboardButton("Junction B", callback_data='{"Junction": 1}')],  [InlineKeyboardButton("Junction C", callback_data='{"Junction": 2}'),InlineKeyboardButton("Junction D", callback_data='{"Junction": 3}')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         query.message.reply_text('Please Select:', reply_markup=reply_markup)
@@ -130,48 +130,81 @@ class tg():
             query.edit_message_text(text=f"Selected Function: {self.functions[ans['Function']]}")
             self.functionType = ans['Function']
             if self.functionType != 2:
-                self.getJunction(query)
+                self.lta_get_Junction(query)
             else:
                 
                 AllStatus = ''
                 for i in range(0, self.no_Of_client):
-                    AllStatus = AllStatus+ self.viewStatus(i) + '\n'
+                    AllStatus = AllStatus+ self.lta_view_Status(i) + '\n'
                 query.edit_message_text(text=f"Selected Function: {self.functions[ans['Function']]}\n"+ AllStatus)
                 #Execute Function 2, to view Status of all Junctions
-                pass
+
         elif 'Junction' in ans:
             query.edit_message_text(text=f"Selected Junction: {self.junctions[ans['Junction']]}")
             
             if self.functionType == 0:
                 #Run function 0,to get logs of one Junction 
-                self.getLog(ans['Junction'])
-                
+                self.lta_get_Log(ans['Junction'])
                 #query.message.reply_text('Running Get Log Function for '+self.junctions[ans['Junction']])
-                pass
+
             elif  self.functionType == 1:
-                result = self.suspendJunction(ans['Junction'])
+                result = self.lta_suspend_Junction(ans['Junction'])
                 query.edit_message_text(text=f"Selected Junction: {self.junctions[ans['Junction']]}\n"+ result)
                 #query.message.reply_text('Running Suspend Function for '+self.junctions[ans['Junction']])
                 #Run function 1,  to suspend one junction
-                pass
-
  
+    def driver_view_Suspended(self,junctionIndex):
+        try:
+            with open(CA_path, 'rb') as f:
+                creds = grpc.ssl_channel_credentials(f.read())
+
+            channel = grpc.secure_channel(self.host + ':'+str(self.controller_ports[junctionIndex]), creds)
+            stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
+            
+            response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=6, RequestMsg='Request to get Suspended Junctions'))
+            return response.ResponseMsg
+        except grpc.RpcError as rpc_error:
+                #print(rpc_error)
+            if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+                return self.junctions[junctionIndex] + ' : Offline'
+
+    def handle_View_Suspended(self,update, context):
+        suspendedJunction = ''
+        for i in range(0, self.no_Of_client):
+            junction = str(self.driver_view_Suspended(i))
+            if junction != "None":
+                suspendedJunction = suspendedJunction + str(self.driver_view_Suspended(i))
         
-
-
-    def telegram_start_server(self):
-        updater = Updater(self.bot_token , use_context=True)
+        if suspendedJunction == '':
+            suspendedJunction = 'None'
+        else:
+            suspendedJunction = suspendedJunction.replace('-Controller', '')
+        update.message.reply_text('Suspended Junction:\n' +  suspendedJunction)
+        
+        
+    
+    def telegram_start_driver_server(self):
+        updater = Updater(self.driver_bot_token, use_context=True)
         dp = updater.dispatcher
-        dp.add_handler(CommandHandler('getLog',self.getLog))
+        dp.add_handler(CommandHandler('getSuspended',self.handle_View_Suspended))
+        print("\nDriver Telegram Board Initialized")
+        updater.start_polling()
+        updater.idle()
+
+
+    def telegram_start_lta_server(self):
+        updater = Updater(self.lta_bot_token , use_context=True)
+        dp = updater.dispatcher
+        dp.add_handler(CommandHandler('getLog',self.lta_get_Log))
         dp.add_handler(CommandHandler('menu',self.menu))
         dp.add_handler(CallbackQueryHandler(self.handleUser))
         
-        print("\nTelegram Board Initialized")
+        print("\nLTA Telegram Board Initialized")
         updater.start_polling()
         updater.idle()
 
     def telegram_bot_sendtext(self, bot_message):
-        send_text = 'https://api.telegram.org/bot' + self.bot_token + '/sendMessage?chat_id=' + self.bot_chatID + '&parse_mode=Markdown&text=' + bot_message
+        send_text = 'https://api.telegram.org/bot' + self.lta_bot_token + '/sendMessage?chat_id=' + self.bot_chatID + '&parse_mode=Markdown&text=' + bot_message
         response = requests.get(send_text)
         print('Text = ' + send_text)
         print(response)
@@ -179,7 +212,7 @@ class tg():
 
     def telegram_bot_sendFiles(self):
         files = {'document': open(logDir)}
-        send_file = 'https://api.telegram.org/bot' + self.bot_token + '/sendDocument?chat_id=' + self.bot_chatID + '&caption=' + logDir
+        send_file = 'https://api.telegram.org/bot' + self.lta_bot_token + '/sendDocument?chat_id=' + self.bot_chatID + '&caption=' + logDir
         response = requests.post(send_file,  files=files)
         print(logDir)
         print(response.json())

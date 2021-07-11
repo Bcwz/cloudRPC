@@ -22,9 +22,9 @@ root_Key = os.path.join(script_dir, key_path)
 class tg():
     def __init__(self, cName):
         #self.bot_token = '1865636715:AAEmLEWQwrIIDTtWwVQVPxVwe5XFyvUulw0'
-        self.bot_token = '1867420837:AAFWi2z4pgj38GfK5RgW8BF6T6gk0Lf72kk'
+        self.bot_token = '1867420837:AAFWi2z4pgj38GfK5RgW8BF6T6gk0Lf72kk' #Bernie
         #self.bot_chatID = '347015062'
-        self.bot_chatID = '713284365'
+        self.bot_chatID = '713284365' #Bernie
 
         self.logDir = ''
         self.clientName = cName
@@ -40,12 +40,11 @@ class tg():
 
         self.junctions = ['JunctionA-Controller', 'JunctionB-Controller', 'JunctionC-Controller', 'JunctionD-Controller']
         self.traffic_lights = ['TL-A', 'TL-B','TL-C','TL-D']
-        self.functions = ['Get Logs', 'Suspend Junction', 'View Status','Route to Destination']
-        self.host = 'localhost'
-        
+        self.functions = ['Get Logs', 'Suspend Junction', 'View Status']
+        self.host = 'localhost'        
 
     def menu(self, update, context):
-        keyboard = [[InlineKeyboardButton("Get Logs", callback_data='{"Function": 0}'),InlineKeyboardButton("Suspend/Unsuspend Junction", callback_data='{"Function": 1}')], [InlineKeyboardButton("View Junction Status", callback_data='{"Function": 2}')],[InlineKeyboardButton("View Route To Destination", callback_data='{"Function": 3}')]]
+        keyboard = [[InlineKeyboardButton("Get Logs", callback_data='{"Function": 0}'),InlineKeyboardButton("Suspend/Unsuspend Junction", callback_data='{"Function": 1}')], [InlineKeyboardButton("View Junction Status", callback_data='{"Function": 2}')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         update.message.reply_text('Please Select:', reply_markup=reply_markup)
         
@@ -120,15 +119,6 @@ class tg():
         reply_markup = InlineKeyboardMarkup(keyboard)
         query.message.reply_text('Please Select:', reply_markup=reply_markup)
 
-       # Function for routing from Point A to Point B
-    def viewRoute(self,query):          
-        keyboard = [[InlineKeyboardButton("Junction A", callback_data='{"Junction": 0}'),InlineKeyboardButton("Junction B", callback_data='{"Junction": 1}')],  [InlineKeyboardButton("Junction C", callback_data='{"Junction": 2}'),InlineKeyboardButton("Junction D", callback_data='{"Junction": 3}')]]
-        reply_markup_start = InlineKeyboardMarkup(keyboard)
-        reply_markup_end = InlineKeyboardMarkup(keyboard)
-        query.message.reply_text('Please select STARTING location / junction:', reply_markup=reply_markup_start)
-        query.message.reply_text('Please select ENDING location / junction:', reply_markup=reply_markup_end)
-        return reply_markup_start, reply_markup_end
-
     def handleUser(self,update, context):
         query = update.callback_query
 
@@ -140,9 +130,7 @@ class tg():
             query.edit_message_text(text=f"Selected Function: {self.functions[ans['Function']]}")
             self.functionType = ans['Function']
 
-            if self.functionType == 3:
-                self.viewRoute(query)
-            elif self.functionType != 2:
+            if self.functionType != 2:
                 self.getJunction(query)
             else:
                 AllStatus = ''
@@ -166,14 +154,6 @@ class tg():
                 #query.message.reply_text('Running Suspend Function for '+self.junctions[ans['Junction']])
                 #Run function 1,  to suspend one junction
                 pass
-            elif self.functionType == 3:
-                start_location = {self.junctions[ans['Junction']]}
-                end_location = {self.junctions[ans['Junction']]}
-                query.edit_message_text(text=f"Starting location:"+ start_location)
-                query.edit_message_text(text=f"Ending location:"+ end_location)
-
-
- 
         
 
 

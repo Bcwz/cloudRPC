@@ -51,7 +51,7 @@ def requestFunction(port, requestType):
 
         channel = grpc.secure_channel(host + ':'+str(port), creds)
         stub = assignment_prototype_pb2_grpc.communicatorStub(channel)
-        response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=requestType, RequestMsg= option_type[requestType] + ' From ' + name))
+        response = stub.makerequest(assignment_prototype_pb2.RequestCall(type=requestType, RequestMsg= option_type[requestType] + ' From '+ JunctionName+ '，'+name))
         print(response.ResponseMsg)
         threading.Timer(time_gap, requestFunction,[port,requestType]).start()
         if requestType == 0:

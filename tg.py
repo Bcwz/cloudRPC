@@ -21,9 +21,9 @@ root_Key = os.path.join(script_dir, key_path)
 # Please keep this safe as this is the bot token....
 class tg():
     def __init__(self, cName):
-        self.lta_bot_token = '<LTA BotID>'
-        self.driver_bot_token = '<Driver BotID>'
-        self.bot_chatID = '347015062'
+        self.lta_bot_token = '1867420837:AAFWi2z4pgj38GfK5RgW8BF6T6gk0Lf72kk'
+        self.driver_bot_token = '1931134880:AAEu_N_CKtZL6w7k8aUPH21_TYGGU0ld2zA'
+        self.bot_chatID = '713284365'
 
         self.logDir = ''
         self.clientName = cName
